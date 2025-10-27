@@ -190,34 +190,22 @@ class SitemapParser:
             self.logger.error(f"Error parsing sitemap XML: {e}")
             raise ValueError(f"Failed to parse sitemap: {e}")
     
-    def extract_country_urls(self, urls: List[str]) -> Dict[str, CountryURLs]:
+    def filter_country_urls(self, urls: List[str]) -> List[str]:
         """
-        Filter and categorize country-related URLs.
+        Filter URLs to keep only country-related paths.
         
         Args:
             urls: All URLs from sitemap
         
         Returns:
-            Dictionary mapping country slugs to their URLs
+            List of filtered country URLs
         """
-        self.logger.info("Extracting country URLs")
+        self.logger.info("Filtering country URLs")
         
-        # Pattern to match country URLs: /the-world-factbook/countries/{slug}
+        # Pattern to match country URLs: /the-world-factbook/countries/{slug}*
         country_pattern = re.compile(r'/the-world-factbook/countries/([^/]+)(?:/.*)?$')
         
-        # Patterns for different URL types
-        url_patterns = {
-            'main': re.compile(r'^/the-world-factbook/countries/([^/]+)(?:/)?$'),
-            'factsheet': re.compile(r'^/the-world-factbook/countries/([^/]+)/factsheets?(?:/)?$'),
-            'images': re.compile(r'^/the-world-factbook/countries/([^/]+)/images?(?:/)?$'),
-            'flag': re.compile(r'^/the-world-factbook/countries/([^/]+)/flag?(?:/)?$'),
-            'map': re.compile(r'^/the-world-factbook/countries/([^/]+)/map?(?:/)?$'),
-            'locator_map': re.compile(r'^/the-world-factbook/countries/([^/]+)/locator-map?(?:/)?$'),
-        }
-        
-        countries: Dict[str, CountryURLs] = {}
-        total_country_urls = 0
-        
+        country_urls = []
         for url in urls:
             # Extract just the path part
             if url.startswith('http'):
@@ -228,41 +216,137 @@ class SitemapParser:
             
             # Check if this is a country URL
             match = country_pattern.match(path)
-            if not match:
+            if match:
+                country_urls.append(url)
+        
+        self.logger.info(f"Filtered to {len(country_urls)} country URLs from {len(urls)} total URLs")
+        return country_urls
+
+    def extract_slug_and_type(self, path: str) -> tuple[str, str]:
+        """
+        Extract country slug and URL type from path.
+        
+        Args:
+            path: URL path (e.g., /countries/france/flag)
+        
+        Returns:
+            Tuple of (slug, url_type)
+        """
+        # Remove /the-world-factbook prefix if present
+        clean_path = path.replace('/the-world-factbook', '')
+        
+        # Pattern to match country URLs: /countries/{slug} or /countries/{slug}/{type}
+        country_pattern = re.compile(r'^/countries/([^/]+)(?:/([^/]+))?(?:/)?$')
+        
+        match = country_pattern.match(clean_path)
+        if not match:
+            return None, None
+        
+        slug = match.group(1)
+        url_type = match.group(2) or 'main'
+        
+        # Normalize URL types
+        url_type_mapping = {
+            'factsheets': 'factsheet',
+            'images': 'images', 
+            'flag': 'flag',
+            'map': 'map',
+            'locator-map': 'locator_map',
+            'travel-facts': 'travel_facts'
+        }
+        
+        normalized_type = url_type_mapping.get(url_type, url_type)
+        
+        return slug, normalized_type
+
+    def transform_to_page_data_url(self, web_url: str) -> str:
+        """
+        Convert web URL to page-data.json URL.
+        
+        Args:
+            web_url: Original URL from sitemap
+        
+        Returns:
+            Full page-data.json URL
+        """
+        # Extract path from web_url
+        if web_url.startswith('http'):
+            from urllib.parse import urlparse
+            path = urlparse(web_url).path
+        else:
+            path = web_url
+        
+        # Remove /the-world-factbook prefix if present for transformation
+        clean_path = path.replace('/the-world-factbook', '')
+        
+        # Remove trailing slash to avoid double slashes in final URL
+        clean_path = clean_path.rstrip('/')
+        
+        # Transform: /page-data{path}/page-data.json
+        page_data_path = f"/page-data{clean_path}/page-data.json"
+        
+        # Construct full URL
+        full_url = f"{self.config.base_url}{page_data_path}"
+        
+        return full_url
+
+    def organize_by_country(self, country_urls: List[str]) -> Dict[str, CountryURLs]:
+        """
+        Group page-data.json URLs by country slug with categorization.
+        
+        Args:
+            country_urls: List of country web URLs
+        
+        Returns:
+            Dictionary mapping slugs to their page-data URLs
+        """
+        self.logger.info("Organizing URLs by country and transforming to page-data.json")
+        
+        countries: Dict[str, CountryURLs] = {}
+        
+        for url in country_urls:
+            # Extract path from URL
+            if url.startswith('http'):
+                from urllib.parse import urlparse
+                path = urlparse(url).path
+            else:
+                path = url
+            
+            # Extract slug and type
+            slug, url_type = self.extract_slug_and_type(path)
+            if not slug:
                 continue
-            
-            slug = match.group(1)
-            total_country_urls += 1
-            
-            # Debug: log first few URL processing
-            if len(countries) <= 3:
-                self.logger.debug(f"Processing URL: '{url}' -> path: '{path}'")
-            
-            # Debug: log first few matches
-            if total_country_urls <= 5:
-                self.logger.debug(f"Country URL match: path='{path}', slug='{slug}'")
             
             # Initialize country entry if not exists
             if slug not in countries:
                 countries[slug] = CountryURLs()
             
-            # Categorize the URL
-            categorized = False
-            for url_type, pattern in url_patterns.items():
-                type_match = pattern.match(path)
-                if type_match:
-                    # Verify slug consistency
-                    if type_match.group(1) == slug:
-                        setattr(countries[slug], url_type, path)
-                        categorized = True
-                        break
+            # Transform to page-data.json URL
+            page_data_url = self.transform_to_page_data_url(url)
             
-            # If not categorized into specific types, add to 'other'
-            if not categorized:
-                if path not in countries[slug].other:
-                    countries[slug].other.append(path)
+            # Categorize the URL
+            if url_type == 'main':
+                countries[slug].main = page_data_url
+            elif url_type == 'factsheet':
+                countries[slug].factsheet = page_data_url
+            elif url_type == 'images':
+                countries[slug].images = page_data_url
+            elif url_type == 'flag':
+                countries[slug].flag = page_data_url
+            elif url_type == 'map':
+                countries[slug].map = page_data_url
+            elif url_type == 'locator_map':
+                countries[slug].locator_map = page_data_url
+            elif url_type == 'travel_facts':
+                # Add to other category for travel facts
+                if page_data_url not in countries[slug].other:
+                    countries[slug].other.append(page_data_url)
+            else:
+                # Unknown type, add to other
+                if page_data_url not in countries[slug].other:
+                    countries[slug].other.append(page_data_url)
         
-        self.logger.info(f"Found {len(countries)} countries with {total_country_urls} total URLs")
+        self.logger.info(f"Organized {len(countries)} countries with page-data.json URLs")
         
         # Log URL type distribution
         type_counts = {'main': 0, 'factsheet': 0, 'images': 0, 'flag': 0, 'map': 0, 'locator_map': 0, 'other': 0}
@@ -273,7 +357,7 @@ class SitemapParser:
                 elif getattr(country_urls, url_type):
                     type_counts[url_type] += 1
         
-        self.logger.info(f"URL type distribution: {type_counts}")
+        self.logger.info(f"Page-data.json URL type distribution: {type_counts}")
         
         return countries
     
@@ -357,8 +441,11 @@ class SitemapParser:
             # Parse XML to extract URLs
             urls = self.parse_sitemap_xml(xml_content)
             
-            # Extract and categorize country URLs
-            countries = self.extract_country_urls(urls)
+            # Filter to keep only country URLs
+            country_urls = self.filter_country_urls(urls)
+            
+            # Organize by country with page-data.json transformation
+            countries = self.organize_by_country(country_urls)
             
             # Save to data/index/countries.json
             output_path = "data/index/countries.json"
