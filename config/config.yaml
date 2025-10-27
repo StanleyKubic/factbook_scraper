@@ -1,0 +1,20 @@
+# CIA Factbook Scraper Configuration
+
+# Base URLs
+base_url: "https://www.cia.gov/the-world-factbook"
+sitemap_url: "https://www.cia.gov/the-world-factbook/sitemap/sitemap-0.xml"
+
+# Scraping settings
+retry_attempts: 3
+retry_delay: 2  # seconds, exponential backoff
+request_timeout: 30  # seconds
+rate_limit_delay: 1  # seconds between requests
+
+# Logging
+log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+log_to_file: true
+log_to_console: true
+
+# Snapshot settings
+snapshot_compression: true  # gzip individual JSON files
+archive_snapshots: false  # tar.gz old snapshots (manual for now)

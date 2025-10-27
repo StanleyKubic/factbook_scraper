@@ -1,0 +1,276 @@
+# CIA Factbook Scraper - Roadmap
+
+**Current step : 1.1**
+
+## Phase 1: Foundation & Discovery
+
+### Step 1.1: Project Structure Setup
+**Objective**: Initialize project with base directory structure and configuration
+
+**Deliverables**:
+- Directory structure (config/, discovery/, scrapers/, analyzers/, data/, utils/, logs/)
+- config.yaml with base URLs and settings
+- requirements.txt with dependencies (requests, xmltodict, pydantic, loguru)
+- README.md with project overview
+
+---
+
+### Step 1.2: Sitemap Parser
+**Objective**: Extract all country URLs and patterns from CIA Factbook sitemap
+
+**Deliverables**:
+- Module that fetches and parses sitemap XML
+- Extracts all `/countries/{slug}` URLs
+- Identifies URL patterns (main pages, factsheets, sub-pages)
+- Outputs `data/index/countries.json` with country slugs and associated URLs
+- Error handling for sitemap fetch failures
+
+---
+
+### Step 1.3: Page-Data.json Pattern Discovery
+**Objective**: Understand how Gatsby serves data and identify all page-data.json endpoints
+
+**Deliverables**:
+- Module that tests page-data.json pattern for discovered URLs
+- For sample countries (5-10), fetch all page-data.json variants
+- Document JSON structure and nesting
+- Outputs `data/index/url_patterns.json` mapping URL types to their data structure
+- Validation that page-data.json pattern is consistent
+
+---
+
+## Phase 2: Data Extraction
+
+### Step 2.1: JSON Fetcher
+**Objective**: Reliable fetching of page-data.json files with retry and rate limiting
+
+**Deliverables**:
+- HTTP client with configurable retry logic (3 attempts, exponential backoff)
+- Rate limiting (configurable delay between requests)
+- Timeout handling (configurable, default 30s)
+- Error classification (404, timeout, parsing error, network error)
+- Response validation (checks if JSON is valid and non-empty)
+- Logging of all fetch operations
+
+---
+
+### Step 2.2: Data Merger
+**Objective**: Combine data from multiple page-data.json sources per country
+
+**Deliverables**:
+- Module that merges main page + factsheet + other sub-pages data
+- Conflict resolution strategy (main page takes precedence)
+- Preserves source attribution (which data came from which URL)
+- Handles missing sub-pages gracefully
+- Outputs unified country JSON
+
+---
+
+### Step 2.3: Full Scraper Orchestration
+**Objective**: Execute complete scrape of all countries
+
+**Deliverables**:
+- Main scraper that processes all countries from countries.json
+- Sequential processing with configurable parallelism option
+- Per-country error handling (skip and continue on failure)
+- Progress tracking and ETA calculation
+- Outputs to `data/snapshots/{date}/raw/{country-slug}.json`
+- Creates `data/snapshots/{date}/metadata.json` with run statistics
+
+---
+
+## Phase 3: Analysis & Discovery
+
+### Step 3.1: Field Discovery Engine
+**Objective**: Discover all fields across all scraped countries
+
+**Deliverables**:
+- Recursive JSON traverser that builds full field paths (e.g., "geography.area.total")
+- Aggregates all unique field paths across all countries
+- Counts occurrences per field
+- Collects sample values per field
+- Outputs `data/snapshots/{date}/reports/fields_discovery.json`
+
+---
+
+### Step 3.2: Type Detection
+**Objective**: Automatically detect data types and formats for each field
+
+**Deliverables**:
+- Type inference algorithm (string, number, boolean, array, object, date)
+- Unit detection for numeric fields (sq km, USD, etc.)
+- Format detection for strings (email, URL, phone, etc.)
+- Consistency checker (flags fields with mixed types)
+- Enriches fields_discovery.json with type metadata
+
+---
+
+### Step 3.3: Coverage Analyzer
+**Objective**: Calculate field coverage and identify data completeness
+
+**Deliverables**:
+- Coverage calculator (% of countries with each field)
+- Categorization (core >95%, common 50-95%, rare <50%)
+- Missing data report (which countries lack which fields)
+- Statistical analysis for numeric fields (min, max, mean, median)
+- Outputs `data/snapshots/{date}/reports/coverage.json`
+
+---
+
+## Phase 4: Change Detection
+
+### Step 4.1: Snapshot Comparator
+**Objective**: Compare two snapshots and identify changes
+
+**Deliverables**:
+- Diff engine that compares two snapshot directories
+- Detects added/removed countries
+- Detects added/removed fields per country
+- Detects value changes with old/new values
+- Handles nested JSON comparison
+- Outputs `data/diffs/{date1}_to_{date2}/changes.json`
+
+---
+
+### Step 4.2: Change Analyzer
+**Objective**: Analyze and categorize detected changes
+
+**Deliverables**:
+- Change classifier (critical vs minor)
+- Aggregation by field (which fields changed most)
+- Aggregation by country (which countries updated most)
+- Trend detection (systematic changes across many countries)
+- Human-readable diff report in Markdown format
+- Outputs `data/diffs/{date1}_to_{date2}/diff_report.md`
+
+---
+
+## Phase 5: Logging & Monitoring
+
+### Step 5.1: Structured Logger
+**Objective**: Comprehensive logging system for all operations
+
+**Deliverables**:
+- Structured JSON logging (timestamp, level, event, context)
+- Multiple log levels (DEBUG, INFO, WARNING, ERROR)
+- Per-country logging with context
+- File-based logs in `logs/{date}_scrape.log`
+- Console output with progress indicators
+- Log rotation and retention policy
+
+---
+
+### Step 5.2: Run Reporter
+**Objective**: Generate comprehensive reports for each scrape run
+
+**Deliverables**:
+- Run summary with success/failure statistics
+- Error breakdown by type and country
+- Performance metrics (duration, requests/second)
+- Field discovery summary (new/removed fields)
+- Top changes detected
+- Outputs `data/snapshots/{date}/reports/run_report.md`
+- Also creates machine-readable `run_log.json`
+
+---
+
+## Phase 6: Automation & Utilities
+
+### Step 6.1: CLI Interface
+**Objective**: Command-line interface for all operations
+
+**Deliverables**:
+- `main.py` with subcommands:
+  - `discover`: Run discovery phase only
+  - `scrape`: Execute full scrape
+  - `analyze`: Run post-scrape analysis
+  - `diff`: Compare two snapshots
+  - `report`: Generate reports
+- Configuration override via CLI flags
+- Verbose mode for debugging
+- Dry-run mode for testing
+
+---
+
+### Step 6.2: Asset Handler (Optional)
+**Objective**: Manage images and audio files
+
+**Deliverables**:
+- Asset URL extractor from page-data.json
+- Optional asset downloader (flags, maps, audio)
+- Asset organizer in `data/snapshots/{date}/assets/`
+- Deduplication (avoid downloading same asset twice)
+- Asset inventory in metadata
+
+---
+
+### Step 6.3: Snapshot Archiver
+**Objective**: Compress and archive old snapshots
+
+**Deliverables**:
+- Snapshot compression to tar.gz
+- Configurable retention policy
+- Archive management (compress snapshots older than X days)
+- Archive directory structure
+- Decompression utility for accessing archived data
+
+---
+
+## Phase 7: Documentation & Polish
+
+### Step 7.1: Documentation
+**Objective**: Complete user and developer documentation
+
+**Deliverables**:
+- README with usage examples
+- ARCHITECTURE.md explaining design decisions
+- Field catalog documentation (what each field means)
+- Troubleshooting guide
+- Contributing guidelines
+
+---
+
+### Step 7.2: Testing & Validation
+**Objective**: Ensure reliability and correctness
+
+**Deliverables**:
+- Validation tests for each module
+- Integration test for full workflow
+- Test fixtures with sample data
+- Edge case handling verification
+- Performance benchmarks
+
+---
+
+## Dependency Graph
+
+```
+1.1 (Setup) → 1.2 (Sitemap) → 1.3 (Pattern Discovery)
+                                       ↓
+                            2.1 (Fetcher) → 2.2 (Merger) → 2.3 (Full Scrape)
+                                                                    ↓
+                                                3.1 (Field Discovery) → 3.2 (Type Detection) → 3.3 (Coverage)
+                                                                    ↓
+                                                           4.1 (Comparator) → 4.2 (Change Analyzer)
+                                                                    ↓
+                                                5.1 (Logger) → 5.2 (Reporter)
+                                                                    ↓
+                                            6.1 (CLI) + 6.2 (Assets) + 6.3 (Archiver)
+                                                                    ↓
+                                                    7.1 (Docs) + 7.2 (Tests)
+```
+
+---
+
+## MVP Scope (Minimum for first working version)
+
+Priority steps for functional MVP:
+1. **1.1, 1.2, 1.3** - Discovery foundation
+2. **2.1, 2.2, 2.3** - Core scraping
+3. **3.1, 3.3** - Basic analysis (skip type detection for MVP)
+4. **5.1** - Basic logging
+5. **6.1** - Simple CLI
+
+This gives a working scraper with basic analysis. Other steps can be added iteratively.
+
+---

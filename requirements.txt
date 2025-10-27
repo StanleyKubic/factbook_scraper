@@ -1,0 +1,14 @@
+# Core dependencies
+requests>=2.31.0
+httpx>=0.25.0
+xmltodict>=0.13.0
+pyyaml>=6.0.1
+
+# Data validation and parsing
+pydantic>=2.5.0
+
+# Logging
+loguru>=0.7.2
+
+# Utilities
+python-dateutil>=2.8.2
