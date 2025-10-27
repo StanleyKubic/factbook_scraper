@@ -11,7 +11,7 @@ request_timeout: 30  # seconds
 rate_limit_delay: 1  # seconds between requests
 
 # Logging
-log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+log_level: "DEBUG"  # DEBUG, INFO, WARNING, ERROR
 log_to_file: true
 log_to_console: true
 
