@@ -1,0 +1,3731 @@
+{
+  "metadata": {
+    "analyzed_at": "2025-10-27T21:33:35.536888+00:00",
+    "sample_size": 14,
+    "sample_countries": [
+      "afghanistan",
+      "australia",
+      "brazil",
+      "canada",
+      "china",
+      "egypt",
+      "france",
+      "india",
+      "japan",
+      "nigeria",
+      "south-africa",
+      "united-states",
+      "germany",
+      "russia"
+    ],
+    "base_url": "https://www.cia.gov/the-world-factbook"
+  },
+  "json_structure": {
+    "root_path": "result.data.country",
+    "fields_path": "result.data.fields.nodes[]",
+    "confirmed": true,
+    "consistent_across_samples": true,
+    "structure": {
+      "country_metadata": [
+        "name",
+        "region",
+        "updated",
+        "rank"
+      ],
+      "assets": [
+        "flag",
+        "map",
+        "locatorMap",
+        "images"
+      ],
+      "fields_array": "fields.nodes[]"
+    }
+  },
+  "url_type_availability": {
+    "main": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have main URLs"
+    },
+    "factsheet": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have factsheet URLs"
+    },
+    "images": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have images URLs"
+    },
+    "flag": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have flag URLs"
+    },
+    "map": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have map URLs"
+    },
+    "locator_map": {
+      "tested": 14,
+      "successful": 14,
+      "success_rate": 1.0,
+      "notes": "Out of 14 countries, 14 have locator_map URLs"
+    }
+  },
+  "field_catalog": {
+    "total_unique_fields": 161,
+    "fields": {
+      "Life expectancy at birth": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total population",
+            "female",
+            "male"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 139,
+            "max": 141,
+            "avg": 140.71428571428572
+          }
+        },
+        "sample_data": "<strong>total population:</strong> 54.4 years (2024 est.)<br><br><strong>male:</strong> 52.8 years<br><br><strong>female:</strong> 56.1 years"
+      },
+      "Hospital bed density": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total hospital bed density"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 35,
+            "max": 38,
+            "avg": 36.583333333333336
+          }
+        },
+        "sample_data": "0.4 beds/1,000 population (2021 est.)"
+      },
+      "Major rivers (by length in km)": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": false,
+          "typical_data_length": {
+            "min": 158,
+            "max": 798,
+            "avg": 403.46153846153845
+          }
+        },
+        "sample_data": "Amu Darya (shared with Tajikistan [s], Turkmenistan, and Uzbekistan [m]) - 2,620 km; Helmand river source (shared with Iran) - 1,130 km<br /><br /><strong>note:</strong>&nbsp;[s] after country name in..."
+      },
+      "Nationality": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "adjective",
+            "noun"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 74,
+            "max": 99,
+            "avg": 82.21428571428571
+          }
+        },
+        "sample_data": "<strong>noun:</strong> Afghan(s)<br><br><strong>adjective:</strong> Afghan"
+      },
+      "National symbol(s)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "National symbol(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 4,
+            "max": 171,
+            "avg": 40.714285714285715
+          }
+        },
+        "sample_data": "lion"
+      },
+      "Military service age and obligation": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military service age and obligation"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 91,
+            "max": 1860,
+            "avg": 674.0
+          }
+        },
+        "sample_data": "service is voluntary; there is no conscription (2023)<br><br><strong>note: </strong>the Taliban dismissed nearly all women from the former Afghan National Defense and Security Forces, except those ser..."
+      },
+      "Real GDP growth rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Real GDP growth rate 2023",
+            "Real GDP growth rate 2022",
+            "Real GDP growth rate 2021",
+            "Real GDP growth rate 2020",
+            "Real GDP growth rate 2019",
+            "Real GDP growth rate 2024"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 127,
+            "max": 132,
+            "avg": 129.14285714285714
+          }
+        },
+        "sample_data": "2.3% (2023 est.)<br>-6.2% (2022 est.)<br>-20.7% (2021 est.)<br><br><b>note:</b> annual GDP % growth based on constant local currency"
+      },
+      "Mother's mean age at first birth": {
+        "coverage": 0.7857142857142857,
+        "appeared_in_countries": 11,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "mean age"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 20,
+            "max": 112,
+            "avg": 54.36363636363637
+          }
+        },
+        "sample_data": "19.9 years (2015 est.)<br><br><strong>note:</strong> data represents median age at first birth among women 25-49"
+      },
+      "Debt - external": {
+        "coverage": 0.5714285714285714,
+        "appeared_in_countries": 8,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Debt - external 2022",
+            "Debt - external 2023",
+            "Debt - external 2019",
+            "Debt - external 2018"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 100,
+            "max": 109,
+            "avg": 101.75
+          }
+        },
+        "sample_data": "$2.717 billion (2023 est.)<br><br><strong>note:</strong> present value of external debt in current US dollars"
+      },
+      "Constitution": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "amendment process",
+            "history"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 110,
+            "max": 1075,
+            "avg": 639.1428571428571
+          }
+        },
+        "sample_data": "<strong>history:</strong> several previous; latest ratified in 2004, but not currently enforced by the Taliban"
+      },
+      "Maritime claims": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "continental shelf",
+            "exclusive economic zone",
+            "territorial sea",
+            "contiguous zone",
+            "exclusive fishing zone"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 17,
+            "max": 270,
+            "avg": 212.28571428571428
+          }
+        },
+        "sample_data": "none (landlocked)"
+      },
+      "Country name": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "abbreviation",
+            "etymology",
+            "former",
+            "local short form",
+            "local long form",
+            "conventional short form",
+            "conventional long form"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 238,
+            "max": 679,
+            "avg": 519.2142857142857
+          }
+        },
+        "sample_data": "<strong>conventional long form:</strong> Islamic Republic of Afghanistan (prior to 15 August 2021); current country name disputed<br><br><strong>conventional short form:</strong> Afghanistan<br><br><s..."
+      },
+      "Alcohol consumption per capita": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "other alcohols",
+            "spirits",
+            "wine",
+            "beer",
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 347,
+            "max": 356,
+            "avg": 353.14285714285717
+          }
+        },
+        "sample_data": "<strong>total:</strong> 0.01 liters of pure alcohol (2019 est.)<br><br><strong>beer:</strong> 0 liters of pure alcohol (2019 est.)<br><br><strong>wine:</strong> 0 liters of pure alcohol (2019 est.)<br..."
+      },
+      "National coat of arms": {
+        "coverage": 0.2857142857142857,
+        "appeared_in_countries": 4,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Description"
+          ],
+          "has_media": true,
+          "media_types": [
+            "image"
+          ],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 288,
+            "max": 622,
+            "avg": 431.5
+          }
+        },
+        "sample_data": "King George V of the United Kingdom granted the current Commonwealth Coat of Arms to Australia on 19 September 1912; the center of the shield has the symbols of Australia&rsquo;s six states; the kanga..."
+      },
+      "Household income or consumption by percentage share": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "highest 10%",
+            "lowest 10%"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 185,
+            "max": 202,
+            "avg": 187.91666666666666
+          }
+        },
+        "sample_data": "<strong>lowest 10%:</strong> 2.8% (2018 est.)<br><br><strong>highest 10%:</strong> 26.2% (2018 est.)<br><br><b>note:</b> % share of income accruing to lowest and highest 10% of population"
+      },
+      "Methane emissions": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "energy",
+            "other",
+            "waste",
+            "agriculture"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 223,
+            "max": 237,
+            "avg": 229.76923076923077
+          }
+        },
+        "sample_data": "<strong>energy:</strong> 2,146 kt (2022-2024 est.)<br><br><strong>agriculture:</strong> 2,382.2 kt (2019-2021 est.)<br><br><strong>waste:</strong> 587.8 kt (2019-2021 est.)<br><br><strong>other:</stro..."
+      },
+      "Land use": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "other",
+            "forest",
+            "permanent pasture",
+            "permanent crops",
+            "arable land",
+            "agricultural land"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 265,
+            "max": 275,
+            "avg": 272.2142857142857
+          }
+        },
+        "sample_data": "<strong>agricultural land:</strong> 58.7% (2022 est.)<br><br>arable land: 12% (2022 est.)<br><br>permanent crops: 0.3% (2022 est.)<br><br>permanent pasture: 46.4% (2022 est.)<br><br><strong>forest:</s..."
+      },
+      "Legal system": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Legal system"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 16,
+            "max": 285,
+            "avg": 124.92857142857143
+          }
+        },
+        "sample_data": "the Taliban is implementing its own interpretation of Islamic law, which is partially based on the Hanifi school of Islamic jurisprudence and have enforced strict punishments; before the Taliban takeo..."
+      },
+      "Executive branch": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "expected date of next election",
+            "most recent election date",
+            "election results",
+            "election/appointment process",
+            "cabinet",
+            "head of government",
+            "chief of state"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 699,
+            "max": 1629,
+            "avg": 1232.4285714285713
+          }
+        },
+        "sample_data": "<strong>chief of state:</strong> Taliban Leader HAYBATULLAH Akhundzada (since 15 August 2021)<br><br><strong>head of government:</strong> overall Taliban Leader HAYBATULLAH Akhundzada is the [so-calle..."
+      },
+      "Military and security forces": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military branches"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 232,
+            "max": 2148,
+            "avg": 820.7857142857143
+          }
+        },
+        "sample_data": "the Taliban claims authority over a Ministry of Defense and a National Army (aka Army of the Islamic Emirate of Afghanistan, Islamic Emirate Army, or Afghan Army); it has also formed police forces und..."
+      },
+      "Imports - partners": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Imports - partners"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 136,
+            "max": 152,
+            "avg": 144.21428571428572
+          }
+        },
+        "sample_data": "UAE 28%, Pakistan 15%, China 15%, Uzbekistan 12%, Kazakhstan 9% (2023)<br><br><b>note:</b> top five import partners based on percentage share of imports"
+      },
+      "Current account balance": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Current account balance 2020",
+            "Current account balance 2019",
+            "Current account balance 2023",
+            "Current account balance 2022",
+            "Current account balance 2021",
+            "Current account balance 2024",
+            "Current account balance 2018"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 187,
+            "max": 193,
+            "avg": 190.64285714285714
+          }
+        },
+        "sample_data": "-$3.137 billion (2020 est.)<br>-$3.792 billion (2019 est.)<br>-$3.897 billion (2018 est.)<br><br><b>note:</b> balance of payments - net trade and primary/secondary income in current dollars"
+      },
+      "Natural resources": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Natural resources"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 88,
+            "max": 944,
+            "avg": 264.14285714285717
+          }
+        },
+        "sample_data": "natural gas, petroleum, coal, copper, chromite, talc, barites, sulfur, lead, zinc, iron ore, salt, precious and semiprecious stones, arable land"
+      },
+      "Broadcast media": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Broadcast media"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 201,
+            "max": 653,
+            "avg": 450.07142857142856
+          }
+        },
+        "sample_data": "under the Taliban, independent media outlets have decreased and are probably self-censoring; the Ministry of Information and Culture monitors all mass media; television and radio are key media platfor..."
+      },
+      "Tobacco use": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "female",
+            "male",
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 136,
+            "max": 139,
+            "avg": 137.57142857142858
+          }
+        },
+        "sample_data": "<strong>total:</strong> 20.8% (2025 est.)<br><br><strong>male:</strong> 36.5% (2025 est.)<br><br><strong>female:</strong> 5.2% (2025 est.)"
+      },
+      "Electricity generation sources": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "hydroelectricity",
+            "solar",
+            "fossil fuels",
+            "biomass and waste",
+            "wind",
+            "nuclear",
+            "geothermal",
+            "tide and wave"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 238,
+            "max": 566,
+            "avg": 458.85714285714283
+          }
+        },
+        "sample_data": "<strong>fossil fuels:</strong> 13.3% of total installed capacity (2023 est.)<br><br><strong>solar:</strong> 9.7% of total installed capacity (2023 est.)<br><br><strong>hydroelectricity:</strong> 77% o..."
+      },
+      "Education expenditure": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Education expenditure (% national budget)",
+            "Education expenditure (% GDP)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 62,
+            "max": 64,
+            "avg": 63.142857142857146
+          }
+        },
+        "sample_data": "4.3% of GDP (2017 est.)<br><br>8.2% national budget (2017 est.)"
+      },
+      "Total fertility rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total fertility rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 35,
+            "max": 36,
+            "avg": 35.857142857142854
+          }
+        },
+        "sample_data": "4.43 children born/woman (2024 est.)"
+      },
+      "GDP - composition, by sector of origin": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "services",
+            "industry",
+            "agriculture"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 265,
+            "max": 268,
+            "avg": 267.0
+          }
+        },
+        "sample_data": "<strong>agriculture:</strong> 34.7% (2023 est.)<br><br><strong>industry:</strong> 13.4% (2023 est.)<br><br><strong>services:</strong> 46.4% (2023 est.)<br><br><b>note:</b> figures may not total 100% d..."
+      },
+      "Population below poverty line": {
+        "coverage": 0.5714285714285714,
+        "appeared_in_countries": 8,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "population"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 90,
+            "max": 118,
+            "avg": 95.75
+          }
+        },
+        "sample_data": "54.5% (2016 est.)<br><br><b>note:</b> % of population with income below national poverty line"
+      },
+      "Terrain": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "terrain"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 29,
+            "max": 761,
+            "avg": 131.21428571428572
+          }
+        },
+        "sample_data": "mostly rugged mountains; plains in north and southwest"
+      },
+      "International law organization participation": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "International law organization participation"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 76,
+            "max": 108,
+            "avg": 81.57142857142857
+          }
+        },
+        "sample_data": "has not submitted an ICJ jurisdiction declaration; formerly accepted ICCt jurisdiction"
+      },
+      "Airports": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 9,
+            "max": 152,
+            "avg": 20.571428571428573
+          }
+        },
+        "sample_data": "68 (2025)"
+      },
+      "Telephones - mobile cellular": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total subscriptions",
+            "subscriptions per 100 inhabitants"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 134,
+            "max": 137,
+            "avg": 135.92857142857142
+          }
+        },
+        "sample_data": "<strong>total subscriptions:</strong> 23 million (2023 est.)<br><br><strong>subscriptions per 100 inhabitants:</strong> 57 (2021 est.)"
+      },
+      "Reserves of foreign exchange and gold": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Reserves of foreign exchange and gold 2020",
+            "Reserves of foreign exchange and gold 2019",
+            "Reserves of foreign exchange and gold 2023",
+            "Reserves of foreign exchange and gold 2022",
+            "Reserves of foreign exchange and gold 2021",
+            "Reserves of foreign exchange and gold 2024",
+            "Reserves of foreign exchange and gold 2018"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 200,
+            "max": 206,
+            "avg": 203.92857142857142
+          }
+        },
+        "sample_data": "$9.749 billion (2020 est.)<br>$8.498 billion (2019 est.)<br>$8.207 billion (2018 est.)<br><br><b>note:</b> holdings of gold (year-end prices)/foreign exchange/special drawing rights in current dollars"
+      },
+      "Infant mortality rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "female",
+            "male"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 182,
+            "max": 189,
+            "avg": 184.85714285714286
+          }
+        },
+        "sample_data": "<strong>total:</strong> 101.3 deaths/1,000 live births (2024 est.)<br><br><strong>male:</strong> 109.7 deaths/1,000 live births<br><br><strong>female:</strong> 92.5 deaths/1,000 live births"
+      },
+      "National color(s)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "National color(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 10,
+            "max": 38,
+            "avg": 16.571428571428573
+          }
+        },
+        "sample_data": "red, green, black"
+      },
+      "Currently married women (ages 15-49)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Currently married women (ages 15-49)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 17,
+            "max": 17,
+            "avg": 17.0
+          }
+        },
+        "sample_data": "70.3% (2023 est.)"
+      },
+      "Industries": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Industries"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 82,
+            "max": 572,
+            "avg": 204.71428571428572
+          }
+        },
+        "sample_data": "small-scale production of bricks, textiles, soap, furniture, shoes, fertilizer, apparel, food products, non-alcoholic beverages, mineral water, cement; handwoven carpets; natural gas, coal, copper"
+      },
+      "Trafficking in persons": {
+        "coverage": 0.35714285714285715,
+        "appeared_in_countries": 5,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "tier rating"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 391,
+            "max": 444,
+            "avg": 411.4
+          }
+        },
+        "sample_data": "<strong>tier rating:</strong> Tier 3 &mdash; Afghanistan does not fully meet the minimum standards for the elimination of trafficking and is not making significant efforts to do so, therefore, Afghani..."
+      },
+      "Elevation": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "highest point",
+            "lowest point",
+            "mean elevation"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 148,
+            "max": 1065,
+            "avg": 258.7142857142857
+          }
+        },
+        "sample_data": "<strong>highest point:</strong> Noshak 7,492 m<br><br><strong>lowest point:</strong> Amu Darya 258 m<br><br><strong>mean elevation:</strong> 1,884 m"
+      },
+      "Independence": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Independence"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 28,
+            "max": 703,
+            "avg": 197.07142857142858
+          }
+        },
+        "sample_data": "19 August 1919 (from UK control over Afghan foreign affairs)"
+      },
+      "Net migration rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total net migration rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 41,
+            "max": 44,
+            "avg": 43.285714285714285
+          }
+        },
+        "sample_data": "-0.1 migrant(s)/1,000 population (2024 est.)"
+      },
+      "Legislative branch - upper chamber": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "expected date of next election",
+            "percentage of women in chamber",
+            "parties elected and seats per party",
+            "most recent election date",
+            "term in office",
+            "scope of elections",
+            "electoral system",
+            "number of seats",
+            "chamber name"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 160,
+            "max": 1100,
+            "avg": 574.4166666666666
+          }
+        },
+        "sample_data": "<strong>chamber name:</strong> Senate<br><br><strong>number of seats:</strong> 76 (all directly elected)<br><br><strong>electoral system:</strong> proportional representation<br><br><strong>scope of e..."
+      },
+      "Real GDP per capita": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Real GDP per capita 2023",
+            "Real GDP per capita 2022",
+            "Real GDP per capita 2021",
+            "Real GDP per capita 2020",
+            "Real GDP per capita 2019",
+            "Real GDP per capita 2024",
+            "Real GDP per capita 2015"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 103,
+            "max": 116,
+            "avg": 106.07142857142857
+          }
+        },
+        "sample_data": "$2,000 (2023 est.)<br>$2,000 (2022 est.)<br>$2,100 (2021 est.)<br><br><b>note:</b> data in 2021 dollars"
+      },
+      "School life expectancy (primary to tertiary education)": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "female",
+            "male",
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 147,
+            "max": 148,
+            "avg": 147.91666666666666
+          }
+        },
+        "sample_data": "<strong>total:</strong> 11 years (2018 est.)<br><br><strong>male:</strong> 13 years (2018 est.)<br><br><strong>female:</strong> 8 years (2018 est.)"
+      },
+      "Irrigated land": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Irrigated land"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 18,
+            "max": 20,
+            "avg": 19.0
+          }
+        },
+        "sample_data": "24,930 sq km (2022)"
+      },
+      "Geography - note": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Geography - note"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 146,
+            "max": 1831,
+            "avg": 545.5
+          }
+        },
+        "sample_data": "landlocked; the Hindu Kush mountains that run northeast to southwest divide the northern provinces from the rest of the country; the highest peaks are in the northern Vakhan (Wakhan Corridor)"
+      },
+      "Obesity - adult prevalence rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "prevalence rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 10,
+            "max": 12,
+            "avg": 11.357142857142858
+          }
+        },
+        "sample_data": "5.5% (2016)"
+      },
+      "Gini Index coefficient - distribution of family income": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Gini Index coefficient - distribution of family income 2015",
+            "Gini Index coefficient - distribution of family income 2018",
+            "Gini Index coefficient - distribution of family income 2016",
+            "Gini Index coefficient - distribution of family income 2010",
+            "Gini Index coefficient - distribution of family income 2017",
+            "Gini Index coefficient - distribution of family income 2012",
+            "Gini Index coefficient - distribution of family income 2014",
+            "Gini Index coefficient - distribution of family income 2008",
+            "Gini Index coefficient - distribution of family income 2019",
+            "Gini Index coefficient - distribution of family income 2021"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 117,
+            "max": 132,
+            "avg": 118.25
+          }
+        },
+        "sample_data": "34.3 (2018 est.)<br><br><b>note:</b> index (0-100) of income distribution; higher values represent greater inequality"
+      },
+      "Space program overview": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Space programs overview"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 1140,
+            "max": 1975,
+            "avg": 1444.4615384615386
+          }
+        },
+        "sample_data": "has a long history of involvement in space-related activities, including astronomy, rockets, satellites, and space tracking; develops, builds, operates, and tracks satellites, including communications..."
+      },
+      "Internet country code": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Internet country code"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 3,
+            "max": 112,
+            "avg": 10.785714285714286
+          }
+        },
+        "sample_data": ".af"
+      },
+      "Exports - commodities": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Exports - commodities"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 117,
+            "max": 167,
+            "avg": 145.5
+          }
+        },
+        "sample_data": "coal, grapes, tropical fruits, gum resins, other nuts (2023)<br><br><b>note:</b> top five export commodities based on value in dollars"
+      },
+      "Children under the age of 5 years underweight": {
+        "coverage": 0.5714285714285714,
+        "appeared_in_countries": 8,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "underweight rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 11,
+            "max": 15,
+            "avg": 12.875
+          }
+        },
+        "sample_data": "19.1% (2018)"
+      },
+      "Heliports": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Heliports"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 8,
+            "max": 156,
+            "avg": 20.5
+          }
+        },
+        "sample_data": "8 (2025)"
+      },
+      "International environmental agreements": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "signed, but not ratified",
+            "party to"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 400,
+            "max": 852,
+            "avg": 605.7142857142857
+          }
+        },
+        "sample_data": "<strong>party to:</strong> Biodiversity, Climate Change, Climate Change-Kyoto Protocol, Climate Change-Paris Agreement, Comprehensive Nuclear Test Ban, Desertification, Endangered Species, Environment..."
+      },
+      "Military deployments": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military deployments"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 33,
+            "max": 589,
+            "avg": 296.9166666666667
+          }
+        },
+        "sample_data": "<strong>note: </strong>the number of Australian military forces varies by mission; since the 1990s, Australia has deployed more than 30,000 personnel on nearly 100 UN peacekeeping and coalition milita..."
+      },
+      "Space agency/agencies": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Space agency/agencies"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 52,
+            "max": 627,
+            "avg": 300.53846153846155
+          }
+        },
+        "sample_data": "Australian Space Agency (ASA; established 2018; headquarters opened in 2020); Defense Space Command (established 2022) (2025)"
+      },
+      "Administrative divisions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Administrative divisions"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 123,
+            "max": 2492,
+            "avg": 641.2857142857143
+          }
+        },
+        "sample_data": "34 provinces (<em>welayat</em>, singular - <em>welayat</em>); Badakhshan, Badghis, Baghlan, Balkh, Bamyan, Daykundi, Farah, Faryab, Ghazni, Ghor, Helmand, Herat, Jowzjan, Kabul, Kandahar, Kapisa, Khos..."
+      },
+      "Exchange rates": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Currency",
+            "Exchange rates 2020",
+            "Exchange rates 2019",
+            "Exchange rates 2018",
+            "Exchange rates 2017",
+            "Exchange rates 2023",
+            "Exchange rates 2022",
+            "Exchange rates 2021",
+            "Exchange rates 2024",
+            "Exchange rates 2016"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 171,
+            "max": 1256,
+            "avg": 256.57142857142856
+          }
+        },
+        "sample_data": "afghanis (AFA) per US dollar -<br><br><strong>Exchange rates:</strong><br>76.814 (2020 est.)<br>77.738 (2019 est.)<br>72.083 (2018 est.)<br>68.027 (2017 est.)<br>67.866 (2016 est.)"
+      },
+      "Electricity access": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "electrification - total population",
+            "electrification - rural areas",
+            "electrification - urban areas"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 69,
+            "max": 192,
+            "avg": 121.07142857142857
+          }
+        },
+        "sample_data": "<strong>electrification - total population:</strong> 85.3% (2022 est.)<br><br><strong>electrification - urban areas:</strong> 95.9%<br><br><strong>electrification - rural areas:</strong> 81.7%"
+      },
+      "Carbon dioxide emissions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "from petroleum and other liquids",
+            "from coal and metallurgical coke",
+            "total emissions",
+            "from consumed natural gas"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 250,
+            "max": 362,
+            "avg": 351.2857142857143
+          }
+        },
+        "sample_data": "7.757 million metric tonnes of CO2 (2023 est.)<br><br><strong>from coal and metallurgical coke:</strong> 930,000 metric tonnes of CO2 (2023 est.)<br><br><strong>from petroleum and other liquids:</stro..."
+      },
+      "Imports": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Imports 2020",
+            "Imports 2019",
+            "Imports 2023",
+            "Imports 2022",
+            "Imports 2021",
+            "Imports 2024",
+            "Imports 2018"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 177,
+            "max": 183,
+            "avg": 180.92857142857142
+          }
+        },
+        "sample_data": "$6.983 billion (2020 est.)<br>$7.371 billion (2019 est.)<br>$7.988 billion (2018 est.)<br><br><b>note:</b> balance of payments - imports of goods and services in current dollars"
+      },
+      "Major urban areas - population": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Major urban areas - population"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 36,
+            "max": 223,
+            "avg": 154.92857142857142
+          }
+        },
+        "sample_data": "4.589 million KABUL (capital) (2023)"
+      },
+      "Military and security service personnel strengths": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military and security forces personnel strengths"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 44,
+            "max": 240,
+            "avg": 108.35714285714286
+          }
+        },
+        "sample_data": "the Taliban claims to have 190,000 under the Ministry of Defense and 215,000 under the Ministry of Interior (2025)"
+      },
+      "Health expenditure": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Health expenditure (as % of national budget)",
+            "Health expenditure (as % of GDP)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 59,
+            "max": 63,
+            "avg": 61.92857142857143
+          }
+        },
+        "sample_data": "21.8% of GDP (2021)<br><br>1.1% of national budget (2022 est.)"
+      },
+      "National anthem(s)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "history",
+            "lyrics/music",
+            "title"
+          ],
+          "has_media": true,
+          "media_types": [
+            "audio"
+          ],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 170,
+            "max": 856,
+            "avg": 447.42857142857144
+          }
+        },
+        "sample_data": "<strong>title:</strong> \"Milli Surood\" (National Anthem)<br><br><strong>lyrics/music:</strong> Abdul Bari JAHANI/Babrak WASA<br><br><strong>history:</strong> adopted 2006"
+      },
+      "Remittances": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Remittances 2023",
+            "Remittances 2022",
+            "Remittances 2021",
+            "Remittances 2020",
+            "Remittances 2019",
+            "Remittances 2024",
+            "Remittances 2018"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 193,
+            "max": 200,
+            "avg": 198.21428571428572
+          }
+        },
+        "sample_data": "1.9% of GDP (2023 est.)<br>2.2% of GDP (2022 est.)<br>2.2% of GDP (2021 est.)<br><br><b>note:</b> personal transfers and compensation between resident and non-resident individuals/households/entities"
+      },
+      "Flag": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Flag description"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 224,
+            "max": 1307,
+            "avg": 587.4285714285714
+          }
+        },
+        "sample_data": "<strong>description: </strong>three equal vertical bands of black (left), red, and green, with the national emblem in white centered on the red band and slightly overlapping the other bands; the emble..."
+      },
+      "Coastline": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Coastline"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 6,
+            "max": 198,
+            "avg": 26.642857142857142
+          }
+        },
+        "sample_data": "0 km (landlocked)"
+      },
+      "Labor force": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Labor force"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 112,
+            "max": 114,
+            "avg": 113.07142857142857
+          }
+        },
+        "sample_data": "9.133 million (2024 est.)<br><br><b>note:</b> number of people ages 15 or older who are employed or seeking work"
+      },
+      "Legislative branch": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "expected date of next election",
+            "parties elected and seats per party",
+            "most recent election date",
+            "scope of elections",
+            "electoral system",
+            "number of seats",
+            "chamber name",
+            "legislative structure",
+            "legislature name",
+            "percentage of women in chamber"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 49,
+            "max": 845,
+            "avg": 288.64285714285717
+          }
+        },
+        "sample_data": "<strong>note:</strong> Afghanistan&rsquo;s bicameral National Assembly consisted of the House of Elders and House of the People but was dissolved after the Taliban took control of Afghanistan in Augus..."
+      },
+      "Average household expenditures": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "on alcohol and tobacco",
+            "on food"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 158,
+            "max": 160,
+            "avg": 159.6153846153846
+          }
+        },
+        "sample_data": "<strong>on food:</strong> 9.9% of household expenditures (2023 est.)<br><br><strong>on alcohol and tobacco:</strong> 3.6% of household expenditures (2023 est.)"
+      },
+      "National holiday": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "National holiday"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 25,
+            "max": 399,
+            "avg": 108.42857142857143
+          }
+        },
+        "sample_data": "previous: Independence Day, 19 August (1919); under the Taliban Government, 15 August (2022) is declared a national holiday, marking the anniversary of the victory of the Afghan jihad<br /><br />"
+      },
+      "Space launch site(s)": {
+        "coverage": 0.7857142857142857,
+        "appeared_in_countries": 11,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Space launch site(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 117,
+            "max": 934,
+            "avg": 259.72727272727275
+          }
+        },
+        "sample_data": "Whalers Way Orbital Launch Complex (commercial site, South Australia); Arnhem Space Center (commercial site, Northern Territory); Bown Orbital Spaceport (commercial site, North Queensland) (2025)"
+      },
+      "GDP (official exchange rate)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "GDP (official exchange rate)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 96,
+            "max": 98,
+            "avg": 97.14285714285714
+          }
+        },
+        "sample_data": "$17.152 billion (2023 est.)<br><br><b>note:</b> data in current dollars at official exchange rate"
+      },
+      "Age structure": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "65 years and over",
+            "15-64 years",
+            "0-14 years"
+          ],
+          "has_media": true,
+          "media_types": [
+            "image"
+          ],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 237,
+            "max": 251,
+            "avg": 243.42857142857142
+          }
+        },
+        "sample_data": "<strong>0-14 years:</strong> 39.6% (male 8,062,407/female 7,818,897)<br><br><strong>15-64 years:</strong> 57.5% (male 11,702,734/female 11,372,249)<br><br><strong>65 years and over:</strong> 2.9% (202..."
+      },
+      "Budget": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "expenditures",
+            "revenues"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 120,
+            "max": 322,
+            "avg": 272.5
+          }
+        },
+        "sample_data": "<strong>revenues:</strong> $9.093 billion (2017 est.)<br><br><strong>expenditures:</strong> $7.411 billion (2017 est.)<br><br><b>note:</b> central government revenues (excluding grants) and expenses c..."
+      },
+      "Nuclear energy": {
+        "coverage": 0.7857142857142857,
+        "appeared_in_countries": 11,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Net capacity of operational nuclear reactors",
+            "Number of nuclear reactors under construction",
+            "Number of operational nuclear reactors",
+            "Percent of total electricity production",
+            "Number of nuclear reactors permanently shut down"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 72,
+            "max": 402,
+            "avg": 290.0
+          }
+        },
+        "sample_data": "<strong>Number of operational nuclear reactors:</strong> 2 (2025)<br><br><strong>Number of nuclear reactors under construction:</strong> 1 (2025)<br><br><strong>Net capacity of operational nuclear rea..."
+      },
+      "Transportation - note": {
+        "coverage": 0.07142857142857142,
+        "appeared_in_countries": 1,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Transportation - note"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 343,
+            "max": 343,
+            "avg": 343.0
+          }
+        },
+        "sample_data": "begun in 1988 and completed in 1994, the Channel Tunnel (nicknamed the Chunnel) is a 50.5-km (31.4-mi) rail tunnel under the English Channel at the Strait of Dover;&nbsp; it runs from Folkestone, Kent..."
+      },
+      "Petroleum": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "refined petroleum consumption",
+            "total petroleum production",
+            "crude oil estimated reserves"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 74,
+            "max": 258,
+            "avg": 237.5
+          }
+        },
+        "sample_data": "<strong>refined petroleum consumption:</strong> 58,000 bbl/day (2023 est.)"
+      },
+      "Government type": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Government type"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 21,
+            "max": 186,
+            "avg": 46.785714285714285
+          }
+        },
+        "sample_data": "theocratic; the United States does not recognize the Taliban Government"
+      },
+      "Physician density": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total physician density"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 39,
+            "max": 39,
+            "avg": 39.0
+          }
+        },
+        "sample_data": "0.32 physicians/1,000 population (2023)"
+      },
+      "Diplomatic representation in the US": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "email address and website",
+            "honorary consulate(s)",
+            "embassy",
+            "consulate(s)",
+            "consulate(s) general",
+            "FAX",
+            "telephone",
+            "chancery",
+            "chief of mission",
+            "trade office(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 78,
+            "max": 870,
+            "avg": 608.5384615384615
+          }
+        },
+        "sample_data": "none<strong><br /><br />note</strong>: the Afghan Embassy closed in March 2022"
+      },
+      "GDP - composition, by end use": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "imports of goods and services",
+            "exports of goods and services",
+            "investment in inventories",
+            "investment in fixed capital",
+            "government consumption",
+            "household consumption"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 496,
+            "max": 509,
+            "avg": 498.9230769230769
+          }
+        },
+        "sample_data": "<strong>household consumption:</strong> 98.1% (2023 est.)<br><br><strong>government consumption:</strong> 21.2% (2023 est.)<br><br><strong>investment in fixed capital:</strong> 15.2% (2023 est.)<br><b..."
+      },
+      "Languages": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Languages",
+            "major-language sample(s)"
+          ],
+          "has_media": true,
+          "media_types": [
+            "audio"
+          ],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 95,
+            "max": 929,
+            "avg": 451.2857142857143
+          }
+        },
+        "sample_data": "Afghan Persian or Dari (official, lingua franca) 77%, Pashto (official) 48%, Uzbeki 11%, English 6%, Turkmani 3%, Urdu 3%, Pashaie 1%, Nuristani 1%, Arabic 1%, Balochi 1%, other &lt;1% (2020 est.)<br>..."
+      },
+      "Maternal mortality ratio": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total maternal mortality ratio"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 40,
+            "max": 42,
+            "avg": 40.857142857142854
+          }
+        },
+        "sample_data": "521 deaths/100,000 live births (2023 est.)"
+      },
+      "Death rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total population death rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 37,
+            "max": 40,
+            "avg": 38.785714285714285
+          }
+        },
+        "sample_data": "11.8 deaths/1,000 population (2024 est.)"
+      },
+      "Climate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Climate",
+            "ten hottest places on Earth (highest average monthly temperature)",
+            "ten coldest places on Earth (lowest average monthly temperature)",
+            "ten wettest places on Earth (average annual precipitation)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 39,
+            "max": 913,
+            "avg": 195.14285714285714
+          }
+        },
+        "sample_data": "arid to semiarid; cold winters and hot summers"
+      },
+      "Illicit drugs": {
+        "coverage": 0.5714285714285714,
+        "appeared_in_countries": 8,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "USG identification"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 83,
+            "max": 151,
+            "avg": 108.5
+          }
+        },
+        "sample_data": "<strong>USG identification:</strong> <br />major illicit drug-producing and/or drug-transit country<br /><br />major precursor-chemical producer (2025)"
+      },
+      "Sex ratio": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total population",
+            "65 years and over",
+            "15-64 years",
+            "0-14 years",
+            "at birth"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 293,
+            "max": 296,
+            "avg": 295.5
+          }
+        },
+        "sample_data": "<strong>at birth:</strong> 1.05 male(s)/female<br><br><strong>0-14 years:</strong> 1.03 male(s)/female<br><br><strong>15-64 years:</strong> 1.03 male(s)/female<br><br><strong>65 years and over:</stron..."
+      },
+      "Military equipment inventories and acquisitions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military equipment inventories and acquisitions"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 218,
+            "max": 754,
+            "avg": 468.7857142857143
+          }
+        },
+        "sample_data": "the Taliban military/security forces are armed with weapons and equipment captured in 2021 from the Afghan National Defense and Security Forces, which was largely equipped with Russian/Soviet-era and ..."
+      },
+      "Exports": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Exports 2020",
+            "Exports 2019",
+            "Exports 2023",
+            "Exports 2022",
+            "Exports 2021",
+            "Exports 2024",
+            "Exports 2018",
+            "Exports 2017",
+            "Exports 2016"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 177,
+            "max": 190,
+            "avg": 181.64285714285714
+          }
+        },
+        "sample_data": "$1.476 billion (2020 est.)<br>$1.516 billion (2019 est.)<br>$1.609 billion (2018 est.)<br><br><b>note:</b> balance of payments - exports of goods and services in current dollars"
+      },
+      "Total water withdrawal": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "agricultural",
+            "industrial",
+            "municipal"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 201,
+            "max": 221,
+            "avg": 213.5
+          }
+        },
+        "sample_data": "<strong>municipal:</strong> 203.4 million cubic meters (2022 est.)<br><br><strong>industrial:</strong> 169.5 million cubic meters (2022 est.)<br><br><strong>agricultural:</strong> 20 billion cubic met..."
+      },
+      "Geographic coordinates": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Geographic coordinates"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 15,
+            "max": 339,
+            "avg": 39.214285714285715
+          }
+        },
+        "sample_data": "33 00 N, 65 00 E"
+      },
+      "Major watersheds (area sq km)": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Internal (endorheic basin) drainage",
+            "Pacific Ocean drainage",
+            "Indian Ocean drainage",
+            "Atlantic Ocean drainage",
+            "Arctic Ocean drainage"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 64,
+            "max": 561,
+            "avg": 260.38461538461536
+          }
+        },
+        "sample_data": "<strong>Indian Ocean drainage:</strong> Indus (1,081,718 sq km)<br><br><strong>Internal (endorheic basin) drainage:</strong> Amu Darya (534,739 sq km); Tarim Basin (1,152,448 sq km)"
+      },
+      "Exports - partners": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Exports - partners"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 133,
+            "max": 147,
+            "avg": 141.42857142857142
+          }
+        },
+        "sample_data": "Pakistan 42%, India 40%, China 4%, UAE 2%, Turkey 2% (2023)<br><br><b>note:</b> top five export partners based on percentage share of exports"
+      },
+      "Terrorist group(s)": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Terrorist group(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 360,
+            "max": 1034,
+            "avg": 489.1666666666667
+          }
+        },
+        "sample_data": "<strong>Terrorist group(s):</strong> Haqqani Network; Harakat ul-Mujahidin; Harakat ul-Jihad-i-Islami; Islamic Jihad Union (IJU); Islamic Movement of Uzbekistan (IMU); Islamic State of Iraq and ash-Sh..."
+      },
+      "Total renewable water resources": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Total renewable water sources"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 36,
+            "max": 39,
+            "avg": 37.642857142857146
+          }
+        },
+        "sample_data": "65.33 billion cubic meters (2022 est.)"
+      },
+      "Urbanization": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "urban population",
+            "rate of urbanization"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 155,
+            "max": 251,
+            "avg": 167.64285714285714
+          }
+        },
+        "sample_data": "<strong>urban population:</strong> 26.9% of total population (2023)<br><br><strong>rate of urbanization:</strong> 3.34% annual rate of change (2020-25 est.)"
+      },
+      "Capital": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "etymology",
+            "time zone note",
+            "daylight saving time",
+            "time difference",
+            "geographic coordinates",
+            "name"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 389,
+            "max": 816,
+            "avg": 539.4285714285714
+          }
+        },
+        "sample_data": "<strong>name:</strong> Kabul<br><br><strong>geographic coordinates:</strong> 34 31 N, 69 11 E<br><br><strong>time difference:</strong> UTC+4.5 (9.5 hours ahead of Washington, DC, during Standard Time)..."
+      },
+      "Legislative branch - lower chamber": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "expected date of next election",
+            "percentage of women in chamber",
+            "parties elected and seats per party",
+            "most recent election date",
+            "term in office",
+            "scope of elections",
+            "electoral system",
+            "number of seats",
+            "chamber name"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 477,
+            "max": 1669,
+            "avg": 753.3333333333334
+          }
+        },
+        "sample_data": "<strong>chamber name:</strong> House of Representatives<br><br><strong>number of seats:</strong> 150 (all directly elected)<br><br><strong>electoral system:</strong> plurality/majority<br><br><strong>..."
+      },
+      "International organization participation": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "International organization participation"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 475,
+            "max": 858,
+            "avg": 650.5
+          }
+        },
+        "sample_data": "Afghanistan is a member of the following organizations but Taliban representatives do not participate: ADB, CICA, CP, ECO, EITI (candidate country), FAO, G-77, IAEA, IBRD, ICAO, ICC (NGOs), ICCt, ICRM..."
+      },
+      "Geoparks": {
+        "coverage": 0.5,
+        "appeared_in_countries": 7,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "global geoparks and regional networks",
+            "total global geoparks and regional networks"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 144,
+            "max": 741,
+            "avg": 308.2857142857143
+          }
+        },
+        "sample_data": "<strong>total global geoparks and regional networks:</strong> 6<br><br><strong>global geoparks and regional networks:</strong> Araripe; Cacapava; Quarta Colonia; Serido; Southern Canyons Pathways; Ube..."
+      },
+      "Population": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "female",
+            "male"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 130,
+            "max": 135,
+            "avg": 131.57142857142858
+          }
+        },
+        "sample_data": "<strong>total:</strong> 40,121,552 (2024 est.)<br><br><strong>male:</strong> 20,301,066<br><br><strong>female:</strong> 19,820,486"
+      },
+      "Telephones - fixed lines": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "subscriptions per 100 inhabitants",
+            "total subscriptions"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 134,
+            "max": 140,
+            "avg": 137.57142857142858
+          }
+        },
+        "sample_data": "<strong>total subscriptions:</strong> 182,000 (2023 est.)<br><br><strong>subscriptions per 100 inhabitants:</strong> (2023 est.) less than 1"
+      },
+      "Agricultural products": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Agricultural products"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 148,
+            "max": 174,
+            "avg": 160.0
+          }
+        },
+        "sample_data": "wheat, milk, grapes, watermelons, potatoes, cantaloupes/melons, vegetables, rice, onions, maize (2023)<br><br><b>note:</b> top ten agricultural products based on tonnage"
+      },
+      "Energy consumption per capita": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Total energy consumption per capita 2023",
+            "Total energy consumption per capita 2022",
+            "Total energy consumption per capita 2019"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 35,
+            "max": 38,
+            "avg": 37.357142857142854
+          }
+        },
+        "sample_data": "3.38 million Btu/person (2023 est.)"
+      },
+      "Gross reproduction rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Gross reproduction rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 15,
+            "max": 16,
+            "avg": 15.928571428571429
+          }
+        },
+        "sample_data": "2.16 (2024 est.)"
+      },
+      "Area": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "water",
+            "land",
+            "total "
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 121,
+            "max": 377,
+            "avg": 191.5
+          }
+        },
+        "sample_data": "<strong>total :</strong> 652,230 sq km<br><br><strong>land:</strong> 652,230 sq km<br><br><strong>water:</strong> 0 sq km"
+      },
+      "Child marriage": {
+        "coverage": 0.5,
+        "appeared_in_countries": 7,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "women married by age 18",
+            "women married by age 15",
+            "men married by age 18"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 114,
+            "max": 305,
+            "avg": 175.42857142857142
+          }
+        },
+        "sample_data": "<strong>women married by age 15:</strong> 9.6% (2023)<br><br><strong>women married by age 18:</strong> 28.7% (2023)<br><br><strong>men married by age 18:</strong> 7.3% (2015)"
+      },
+      "Inflation rate (consumer prices)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Inflation rate (consumer prices) 2019",
+            "Inflation rate (consumer prices) 2024",
+            "Inflation rate (consumer prices) 2023",
+            "Inflation rate (consumer prices) 2022",
+            "Inflation rate (consumer prices) 2021",
+            "Inflation rate (consumer prices) 2020",
+            "Inflation rate (consumer prices) 2018",
+            "Inflation rate (consumer prices) 2017"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 115,
+            "max": 120,
+            "avg": 116.92857142857143
+          }
+        },
+        "sample_data": "-6.6% (2024 est.)<br>-4.6% (2023 est.)<br>13.7% (2022 est.)<br><br><b>note:</b> annual % change based on consumer prices"
+      },
+      "Ports": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total ports",
+            "key ports",
+            "ports with oil terminals",
+            "very small",
+            "small",
+            "medium",
+            "large",
+            "size unknown"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 324,
+            "max": 526,
+            "avg": 422.7692307692308
+          }
+        },
+        "sample_data": "<strong>total ports:</strong> 66 (2024)<br><br><strong>large:</strong> 5<br><br><strong>medium:</strong> 8<br><br><strong>small:</strong> 24<br><br><strong>very small:</strong> 29<br><br><strong>ports..."
+      },
+      "Merchant marine": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "by type"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 111,
+            "max": 243,
+            "avg": 152.0
+          }
+        },
+        "sample_data": "<strong>total:</strong> 604 (2023)<br><br><strong>by type:</strong> bulk carrier 2, general cargo 76, oil tanker 6, other 520"
+      },
+      "Birth rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total population birth rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 38,
+            "max": 40,
+            "avg": 39.642857142857146
+          }
+        },
+        "sample_data": "34.2 births/1,000 population (2024 est.)"
+      },
+      "Drinking water source": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "rural",
+            "urban"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 153,
+            "max": 337,
+            "avg": 319.2142857142857
+          }
+        },
+        "sample_data": "<strong>improved:</strong><br><br>urban: 99% of population (2022 est.)<br><br>rural: 76.1% of population (2022 est.)<br><br>total: 82.2% of population (2022 est.)<br><br><strong>unimproved:</strong><b..."
+      },
+      "Major lakes (area sq km)": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "salt water lake(s)",
+            "fresh water lake(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 55,
+            "max": 630,
+            "avg": 240.69230769230768
+          }
+        },
+        "sample_data": "<strong>salt water lake(s):</strong> Ab-e Istadah-ye Muqur (endorheic basin) - 520 sq km"
+      },
+      "Economic overview": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Summary"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 230,
+            "max": 326,
+            "avg": 277.5
+          }
+        },
+        "sample_data": "<p>low-income South Asian economy; economy stable after major contraction due to Taliban takeover, but recovery remains fragile; widespread poverty and obstacles to human development; import-reliant f..."
+      },
+      "Population distribution": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Population distribution"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 169,
+            "max": 502,
+            "avg": 292.42857142857144
+          }
+        },
+        "sample_data": "populations tend to cluster in the foothills and periphery of the rugged Hindu Kush range; smaller groups are found in many of the country's interior valleys; in general, the east is more densely sett..."
+      },
+      "Dependency ratios": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "potential support ratio",
+            "elderly dependency ratio",
+            "youth dependency ratio",
+            "total dependency ratio"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 252,
+            "max": 333,
+            "avg": 258.64285714285717
+          }
+        },
+        "sample_data": "<strong>total dependency ratio:</strong> 82.7 (2024 est.)<br><br><strong>youth dependency ratio:</strong> 77.5 (2024 est.)<br><br><strong>elderly dependency ratio:</strong> 5.2 (2024 est.)<br><br><str..."
+      },
+      "Suffrage": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Suffrage"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 26,
+            "max": 183,
+            "avg": 42.714285714285715
+          }
+        },
+        "sample_data": "18 years of age; universal"
+      },
+      "Real GDP (purchasing power parity)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Real GDP (purchasing power parity) 2023",
+            "Real GDP (purchasing power parity) 2022",
+            "Real GDP (purchasing power parity) 2021",
+            "Real GDP (purchasing power parity) 2020",
+            "Real GDP (purchasing power parity) 2019",
+            "Real GDP (purchasing power parity) 2024"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 129,
+            "max": 133,
+            "avg": 130.64285714285714
+          }
+        },
+        "sample_data": "$82.238 billion (2023 est.)<br>$80.416 billion (2022 est.)<br>$85.768 billion (2021 est.)<br><br><b>note:</b> data in 2021 dollars"
+      },
+      "Railways": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "narrow gauge",
+            "standard gauge",
+            "broad gauge",
+            "total",
+            "dual gauge"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 85,
+            "max": 412,
+            "avg": 205.0
+          }
+        },
+        "sample_data": "<strong>total:</strong> 32,606 km (2022) 3,448 km electrified<br><br><strong>standard gauge:</strong> 18,007 km (2022) 1.435 mm<br><br><strong>narrow gauge:</strong> 11,914 km (2022) 1.067 mm<br><br><..."
+      },
+      "Religions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Religions"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 76,
+            "max": 735,
+            "avg": 224.28571428571428
+          }
+        },
+        "sample_data": "Muslim 99.7% (Sunni 84.7 - 89.7%, Shia 10 - 15%), other &lt;0.3% (2009 est.)"
+      },
+      "Military - note": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military - note"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 290,
+            "max": 2802,
+            "avg": 1807.2142857142858
+          }
+        },
+        "sample_data": "the Taliban&rsquo;s key security priorities are border and internal security; specific issues have included rising tensions with Pakistan along their shared border, armed anti-Taliban resistance eleme..."
+      },
+      "Population growth rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "total population growth rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 16,
+            "max": 18,
+            "avg": 17.142857142857142
+          }
+        },
+        "sample_data": "2.22% (2024 est.)"
+      },
+      "Broadband - fixed subscriptions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "subscriptions per 100 inhabitants",
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 120,
+            "max": 126,
+            "avg": 122.07142857142857
+          }
+        },
+        "sample_data": "<strong>total:</strong> 33,000 (2023 est.)<br><br><strong>subscriptions per 100 inhabitants:</strong> (2023 est.) less than 1"
+      },
+      "Political parties": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Political parties"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 78,
+            "max": 1605,
+            "avg": 547.4285714285714
+          }
+        },
+        "sample_data": "the Taliban Government enforces an authoritarian state and has banned other political parties<br /><br />the Taliban have banned other political parties but have allowed some party leaders, including ..."
+      },
+      "Judicial branch": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "subordinate courts",
+            "judge selection and term of office",
+            "highest court(s)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 249,
+            "max": 1447,
+            "avg": 838.5714285714286
+          }
+        },
+        "sample_data": "<strong>highest court(s):</strong> the Taliban are purported to have appointed clerics, including a \"Chief Justice,\" to Afghanistan's Supreme Court<br><br><strong>subordinate courts:</strong> provinci..."
+      },
+      "Environmental issues": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Environmental issues"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 121,
+            "max": 455,
+            "avg": 256.5
+          }
+        },
+        "sample_data": "limited natural freshwater resources; inadequate potable water; soil degradation; overgrazing; deforestation (cut down for fuel and building materials); desertification; air and water pollution in urb..."
+      },
+      "Refugees and internally displaced persons": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "refugees",
+            "IDPs",
+            "stateless persons"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 92,
+            "max": 158,
+            "avg": 129.85714285714286
+          }
+        },
+        "sample_data": "<strong>refugees:</strong> 21,236 (2024 est.)<br><br><strong>IDPs:</strong> 5,457,183 (2024 est.)"
+      },
+      "Imports - commodities": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Imports - commodities"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 142,
+            "max": 169,
+            "avg": 150.85714285714286
+          }
+        },
+        "sample_data": "wheat flours, tobacco, palm oil, broadcasting equipment, synthetic fabric (2023)<br><br><b>note:</b> top five import commodities based on value in dollars"
+      },
+      "Background": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Summary",
+            "Background"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 820,
+            "max": 3268,
+            "avg": 2118.1428571428573
+          }
+        },
+        "sample_data": "<p>Ahmad Shah DURRANI unified the Pashtun tribes and founded Afghanistan in 1747. The country served as a buffer between the British and Russian Empires until it won independence from notional British..."
+      },
+      "Electricity": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "transmission/distribution losses",
+            "consumption",
+            "installed generating capacity",
+            "exports",
+            "imports"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 235,
+            "max": 364,
+            "avg": 333.7142857142857
+          }
+        },
+        "sample_data": "<strong>installed generating capacity:</strong> 627,000 kW (2023 est.)<br><br><strong>consumption:</strong> 6.468 billion kWh (2023 est.)<br><br><strong>imports:</strong> 6.221 billion kWh (2023 est.)..."
+      },
+      "Natural gas": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "consumption",
+            "production",
+            "proven reserves",
+            "imports",
+            "exports"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 216,
+            "max": 375,
+            "avg": 340.2142857142857
+          }
+        },
+        "sample_data": "<strong>production:</strong> 80.2 million cubic meters (2020 est.)<br><br><strong>consumption:</strong> 80.2 million cubic meters (2020 est.)<br><br><strong>proven reserves:</strong> 49.554 billion cu..."
+      },
+      "Taxes and other revenues": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Taxes and other revenue"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 89,
+            "max": 91,
+            "avg": 90.25
+          }
+        },
+        "sample_data": "9.9% (of GDP) (2017 est.)<br><br><b>note:</b> central government tax revenue as a % of GDP"
+      },
+      "Ethnic groups": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Ethnic groups"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 50,
+            "max": 632,
+            "avg": 259.5
+          }
+        },
+        "sample_data": "current, reliable statistical data on ethnicity in Afghanistan are not available; Afghanistan's 2004 Constitution cited Pashtun, Tajik, Hazara, Uzbek, Turkman, Baluch, Pashaie, Nuristani, Aymaq, Arab,..."
+      },
+      "Youth unemployment rate (ages 15-24)": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "female",
+            "male",
+            "total"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 203,
+            "max": 206,
+            "avg": 204.14285714285714
+          }
+        },
+        "sample_data": "<strong>total:</strong> 16.7% (2024 est.)<br><br><strong>male:</strong> 15.8% (2024 est.)<br><br><strong>female:</strong> 27% (2024 est.)<br><br><b>note:</b> % of labor force ages 15-24 seeking employ..."
+      },
+      "Map references": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Map references"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 4,
+            "max": 341,
+            "avg": 30.785714285714285
+          }
+        },
+        "sample_data": "Asia"
+      },
+      "Area - comparative": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Area - comparative"
+          ],
+          "has_media": true,
+          "media_types": [
+            "image"
+          ],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 27,
+            "max": 215,
+            "avg": 64.78571428571429
+          }
+        },
+        "sample_data": "almost six times the size of Virginia; slightly smaller than Texas"
+      },
+      "Location": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Location"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 51,
+            "max": 878,
+            "avg": 155.57142857142858
+          }
+        },
+        "sample_data": "Southern Asia, north and west of Pakistan, east of Iran"
+      },
+      "Diplomatic representation from the US": {
+        "coverage": 0.9285714285714286,
+        "appeared_in_countries": 13,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "email address and website",
+            "consulate(s)",
+            "branch office(s)",
+            "consulate(s) general",
+            "FAX",
+            "telephone",
+            "mailing address",
+            "embassy",
+            "chief of mission"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 158,
+            "max": 789,
+            "avg": 645.3076923076923
+          }
+        },
+        "sample_data": "<strong>embassy:</strong> the United States does not maintain a presence in Afghanistan and its diplomatic mission to Afghanistan has relocated to Doha, Qatar"
+      },
+      "Median age": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "female",
+            "male"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 126,
+            "max": 130,
+            "avg": 129.14285714285714
+          }
+        },
+        "sample_data": "<strong>total:</strong> 20 years (2024 est.)<br><br><strong>male:</strong> 20 years<br><br><strong>female:</strong> 20.1 years"
+      },
+      "People - note": {
+        "coverage": 0.07142857142857142,
+        "appeared_in_countries": 1,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "People - note"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 316,
+            "max": 316,
+            "avg": 316.0
+          }
+        },
+        "sample_data": "in October 2015, the Chinese Government announced that it would change its rules to allow all couples to have two children, loosening a 1979 mandate that restricted many couples to one child; the new ..."
+      },
+      "Waste and recycling": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "municipal solid waste generated annually",
+            "percent of municipal solid waste recycled"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 170,
+            "max": 176,
+            "avg": 174.14285714285714
+          }
+        },
+        "sample_data": "<strong>municipal solid waste generated annually:</strong> 5.629 million tons (2024 est.)<br><br><strong>percent of municipal solid waste recycled:</strong> 11.1% (2022 est.)"
+      },
+      "National heritage": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "selected World Heritage Site locales",
+            "total World Heritage Sites"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 214,
+            "max": 2847,
+            "avg": 1122.7857142857142
+          }
+        },
+        "sample_data": "<strong>total World Heritage Sites:</strong> 2 (both cultural)<br><br><strong>selected World Heritage Site locales:</strong> Minaret of Jam; <a href=\"AF_002_large.jpg\" target=\"_blank\" rel=\"noopener\">B..."
+      },
+      "Particulate matter emissions": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "particulate matter emissions"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 41,
+            "max": 44,
+            "avg": 43.07142857142857
+          }
+        },
+        "sample_data": "84  micrograms per cubic meter (2019 est.)"
+      },
+      "Internet users": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "percent of population"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 55,
+            "max": 55,
+            "avg": 55.0
+          }
+        },
+        "sample_data": "<strong>percent of population:</strong> 18% (2023 est.)"
+      },
+      "Major aquifers": {
+        "coverage": 0.7857142857142857,
+        "appeared_in_countries": 11,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": false,
+          "typical_data_length": {
+            "min": 11,
+            "max": 182,
+            "avg": 60.45454545454545
+          }
+        },
+        "sample_data": "Great Artesian Basin, Canning Basin"
+      },
+      "Military expenditures": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Military Expenditures 2019",
+            "Military Expenditures 2018",
+            "Military Expenditures 2017",
+            "Military Expenditures 2016",
+            "Military Expenditures 2015",
+            "Military Expenditures 2014",
+            "Military Expenditures 2024",
+            "Military Expenditures 2023",
+            "Military Expenditures 2022",
+            "Military Expenditures 2021"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 106,
+            "max": 376,
+            "avg": 144.35714285714286
+          }
+        },
+        "sample_data": "3.3% of GDP (2019)<br>3.2% of GDP (2018)<br>3.3% of GDP (2017)<br>3.1% of GDP (2016)<br>2.9% of GDP (2015)"
+      },
+      "Coal": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "proven reserves",
+            "imports",
+            "exports",
+            "consumption",
+            "production"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 333,
+            "max": 370,
+            "avg": 358.85714285714283
+          }
+        },
+        "sample_data": "<strong>production:</strong> 767,000 metric tons (2023 est.)<br><br><strong>consumption:</strong> 503,000 metric tons (2023 est.)<br><br><strong>exports:</strong> 265,000 metric tons (2023 est.)<br><b..."
+      },
+      "Land boundaries": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "regional borders",
+            "total",
+            "border countries (6)",
+            "border countries",
+            "border countries (2)",
+            "border countries (14)",
+            "border countries (4)",
+            "border countries (10)",
+            "French Guiana - total",
+            "border countries (8)"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 28,
+            "max": 400,
+            "avg": 207.14285714285714
+          }
+        },
+        "sample_data": "<strong>total:</strong> 5,987 km<br><br><strong>border countries (6):</strong> China 91 km; Iran 921 km; Pakistan 2,670 km; Tajikistan 1,357 km; Turkmenistan 804 km; Uzbekistan 144 km"
+      },
+      "Dependent areas": {
+        "coverage": 0.21428571428571427,
+        "appeared_in_countries": 3,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Dependent areas"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 156,
+            "max": 844,
+            "avg": 479.6666666666667
+          }
+        },
+        "sample_data": "Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Coral Sea Islands, Heard Island and McDonald Islands, Jervis Bay, Norfolk Island (7)"
+      },
+      "Natural hazards": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Natural hazards"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 8,
+            "max": 1408,
+            "avg": 388.64285714285717
+          }
+        },
+        "sample_data": "damaging earthquakes occur in Hindu Kush mountains; flooding; droughts"
+      },
+      "Unemployment rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Unemployment rate 2024",
+            "Unemployment rate 2023",
+            "Unemployment rate 2022",
+            "Unemployment rate 2021",
+            "Unemployment rate 2020",
+            "Unemployment rate 2019"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 110,
+            "max": 115,
+            "avg": 111.85714285714286
+          }
+        },
+        "sample_data": "13.3% (2024 est.)<br>14% (2023 est.)<br>14.1% (2022 est.)<br><br><b>note:</b> % of labor force seeking employment"
+      },
+      "Literacy": {
+        "coverage": 0.5,
+        "appeared_in_countries": 7,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "female",
+            "male",
+            "total population"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 144,
+            "max": 150,
+            "avg": 145.71428571428572
+          }
+        },
+        "sample_data": "<strong>total population:</strong> 37% (2021 est.)<br><br><strong>male:</strong> 52% (2021 est.)<br><br><strong>female:</strong> 26.6% (2022 est.)"
+      },
+      "Sanitation facility access": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "total",
+            "rural",
+            "urban"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 150,
+            "max": 338,
+            "avg": 306.57142857142856
+          }
+        },
+        "sample_data": "<strong>improved:</strong><br><br>urban: 93% of population (2022 est.)<br><br>rural: 58.9% of population (2022 est.)<br><br>total: 68% of population (2022 est.)<br><br><strong>unimproved:</strong><br>..."
+      },
+      "Industrial production growth rate": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Industrial production growth rate"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 109,
+            "max": 112,
+            "avg": 111.0
+          }
+        },
+        "sample_data": "1.8% (2023 est.)<br><br><b>note:</b> annual % change in industrial value added based on constant local currency"
+      },
+      "Civil aircraft registration country code prefix": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": false,
+          "typical_subfields": [
+            "Civil aircraft registration country code prefix"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 1,
+            "max": 2,
+            "avg": 1.6428571428571428
+          }
+        },
+        "sample_data": "YA"
+      },
+      "Public debt": {
+        "coverage": 0.8571428571428571,
+        "appeared_in_countries": 12,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "Public debt 2022",
+            "Public debt 2021",
+            "Public debt 2020",
+            "Public debt 2019",
+            "Public debt 2018",
+            "Public debt 2023",
+            "Public debt 2017",
+            "Public debt 2016"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 80,
+            "max": 858,
+            "avg": 203.16666666666666
+          }
+        },
+        "sample_data": "58% of GDP (2022 est.)<br><br><b>note:</b> central government debt as a % of GDP"
+      },
+      "Citizenship": {
+        "coverage": 1.0,
+        "appeared_in_countries": 14,
+        "typical_structure": {
+          "has_data": true,
+          "data_contains_html": true,
+          "typical_subfields": [
+            "residency requirement for naturalization",
+            "dual citizenship recognized",
+            "citizenship by descent only",
+            "citizenship by birth"
+          ],
+          "has_media": false,
+          "media_types": [],
+          "has_ranking": true,
+          "typical_data_length": {
+            "min": 230,
+            "max": 394,
+            "avg": 303.92857142857144
+          }
+        },
+        "sample_data": "<strong>citizenship by birth:</strong> no<br><br><strong>citizenship by descent only:</strong> at least one parent must have been born in - and continuously lived in - Afghanistan<br><br><strong>dual ..."
+      }
+    }
+  },
+  "field_categories_detected": {
+    "geography": [
+      "Natural resources",
+      "Terrain",
+      "Elevation",
+      "Geography - note",
+      "Major urban areas - population",
+      "Climate",
+      "Major watersheds (area sq km)",
+      "Area",
+      "Major lakes (area sq km)",
+      "Area - comparative",
+      "Dependent areas"
+    ],
+    "people_society": [
+      "Population below poverty line",
+      "Age structure",
+      "Languages",
+      "Population",
+      "Population distribution",
+      "Religions",
+      "Population growth rate",
+      "People - note"
+    ],
+    "government": [
+      "Constitution",
+      "Country name",
+      "Executive branch",
+      "Legislative branch - upper chamber",
+      "Legislative branch",
+      "Government type",
+      "Capital",
+      "Legislative branch - lower chamber",
+      "Judicial branch"
+    ],
+    "economy": [
+      "Real GDP growth rate",
+      "Imports - partners",
+      "GDP - composition, by sector of origin",
+      "Industries",
+      "Real GDP per capita",
+      "Exports - commodities",
+      "Imports",
+      "GDP (official exchange rate)",
+      "GDP - composition, by end use",
+      "Exports",
+      "Exports - partners",
+      "Inflation rate (consumer prices)",
+      "Real GDP (purchasing power parity)",
+      "Imports - commodities",
+      "Youth unemployment rate (ages 15-24)",
+      "Unemployment rate"
+    ],
+    "energy": [
+      "Electricity generation sources",
+      "Electricity access",
+      "Nuclear energy",
+      "Petroleum",
+      "Energy consumption per capita",
+      "Electricity",
+      "Natural gas",
+      "Coal"
+    ],
+    "communications": [
+      "Broadcast media",
+      "Telephones - mobile cellular",
+      "Internet country code",
+      "Telephones - fixed lines",
+      "Median age",
+      "Internet users"
+    ],
+    "transportation": [
+      "Airports",
+      "Transportation - note",
+      "Railways"
+    ],
+    "military": [
+      "Military service age and obligation",
+      "Military and security forces",
+      "Military deployments",
+      "Military and security service personnel strengths",
+      "Military equipment inventories and acquisitions",
+      "Military - note",
+      "Military expenditures"
+    ],
+    "transnational_issues": [
+      "Trafficking in persons",
+      "Illicit drugs",
+      "Refugees and internally displaced persons"
+    ]
+  },
+  "field_structure_patterns": {
+    "field_object": {
+      "required_keys": [
+        "name",
+        "data",
+        "subfields",
+        "fieldLabel",
+        "media"
+      ],
+      "data_formats": [
+        "HTML string",
+        "plain text"
+      ],
+      "subfield_structure": "Array of {label, ranking}",
+      "media_structure": "Array of {type, altText, caption, localFile}"
+    }
+  },
+  "scraping_recommendations": {
+    "primary_source": "main page-data.json contains all field data",
+    "secondary_sources": "flag, factsheet may contain duplicate or supplementary data",
+    "data_parsing": "HTML in 'data' field needs to be cleaned/parsed",
+    "asset_handling": "Images and audio files referenced, URLs provided",
+    "coverage_notes": "Not all countries have all fields - expect null/missing data"
+  }
+}
