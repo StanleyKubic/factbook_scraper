@@ -24,6 +24,8 @@ from scrapers.parser import parse_country_data
 from utils.config import load_config
 from utils.logger import get_logger
 from discovery.category_mapper import fetch_category_mapping, save_category_mapping
+from refiners.category_enricher import run as run_category_enrichment
+from refiners.multi_value_splitter import run as run_multi_value_splitter
 
 # Module-level logger
 logger = get_logger(__name__)
@@ -52,13 +54,6 @@ def run_scraper(
         # Load configuration and countries
         config = load_config()
         countries = load_countries()
-        
-        # Load category mapping for enrichment
-        category_mapping = load_category_mapping()
-        if category_mapping:
-            logger.info(f"Category mapping loaded with {len(category_mapping)} mappings")
-        else:
-            logger.warning("No category mapping available - proceeding without enrichment")
         
         # Apply country filter if provided
         if country_filter:
@@ -89,8 +84,8 @@ def run_scraper(
         # Sequential processing
         for i, country in enumerate(countries, 1):
             try:
-                # Scrape single country with category mapping
-                result = scrape_country(country, category_mapping)
+                # Scrape single country
+                result = scrape_country(country)
                 scrape_results.append(result)
                 
                 # Save country data (unless dry run)
@@ -145,13 +140,12 @@ def run_scraper(
         raise
 
 
-def scrape_country(country: Dict[str, Any], category_mapping: Dict[str, str] = None) -> Dict[str, Any]:
+def scrape_country(country: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Scrape single country (fetch + parse + enrich).
+    Scrape single country (fetch + parse only).
     
     Args:
         country: Country object from countries.json
-        category_mapping: Database ID to category mapping
     
     Returns:
         Scrape result with data or error
@@ -204,10 +198,6 @@ def scrape_country(country: Dict[str, Any], category_mapping: Dict[str, str] = N
                 'error': 'parse_failed',
                 'error_details': parsed_data['metadata']['error']
             }
-        
-        # Enrich with categories if mapping provided
-        if category_mapping:
-            parsed_data = enrich_with_categories(parsed_data, category_mapping)
         
         duration = time.time() - start_time
         logger.debug(f"Successfully scraped {slug} in {duration:.2f}s")
@@ -638,6 +628,157 @@ def load_countries() -> List[Dict[str, Any]]:
         raise
 
 
+def run_refinement_pipeline(
+    snapshot_date: Optional[str] = None,
+    steps: Optional[List[str]] = None,
+    country_filter: Optional[List[str]] = None
+) -> Dict[str, Any]:
+    """
+    Run refinement pipeline on existing snapshot.
+    
+    Args:
+        snapshot_date: Snapshot date (default: latest)
+        steps: Refinement steps to run (categories, multi-value, all)
+        country_filter: Process only specific countries
+    
+    Returns:
+        Summary statistics dictionary
+    """
+    start_time = time.time()
+    
+    try:
+        # Determine snapshot directory
+        if snapshot_date:
+            if snapshot_date == 'latest':
+                snapshot_dir = get_latest_snapshot()
+            else:
+                snapshot_dir = os.path.join('data', 'snapshots', snapshot_date)
+        else:
+            snapshot_dir = get_latest_snapshot()
+        
+        if not os.path.exists(snapshot_dir):
+            raise FileNotFoundError(f"Snapshot directory {snapshot_dir} not found")
+        
+        # Default to all steps if none specified
+        if steps is None:
+            steps = ['all']
+        
+        # Normalize steps
+        if 'all' in steps:
+            steps_to_run = ['categories', 'multi-value']
+        else:
+            steps_to_run = steps
+        
+        logger.info(f"Starting refinement pipeline for snapshot: {snapshot_dir}")
+        logger.info(f"Steps to run: {steps_to_run}")
+        
+        print(f"\n{'='*60}")
+        print(f"    Refinement Pipeline Started")
+        print(f"{'='*60}")
+        print(f"Snapshot: {snapshot_dir}")
+        print(f"Steps: {', '.join(steps_to_run)}")
+        print(f"{'='*60}\n")
+        
+        # Define directories
+        raw_dir = os.path.join(snapshot_dir, 'raw')
+        refined_dir = os.path.join(snapshot_dir, 'refined')
+        
+        # Check if raw directory exists
+        if not os.path.exists(raw_dir):
+            raise FileNotFoundError(f"Raw directory {raw_dir} not found")
+        
+        # Initialize results tracking
+        pipeline_results = {
+            'snapshot_directory': snapshot_dir,
+            'steps_executed': [],
+            'step_results': {},
+            'total_duration_seconds': 0
+        }
+        
+        # Step 1: Category Enrichment
+        if 'categories' in steps_to_run:
+            logger.info("Starting category enrichment step...")
+            
+            category_result = run_category_enrichment(raw_dir, refined_dir)
+            pipeline_results['steps_executed'].append('categories')
+            pipeline_results['step_results']['categories'] = category_result
+            
+            print(f"\n✓ Category enrichment completed in {category_result['duration_seconds']:.1f}s")
+        
+        # Step 2: Multi-Value Splitting
+        if 'multi-value' in steps_to_run:
+            logger.info("Starting multi-value splitting step...")
+            
+            # Determine input directory based on whether categories were processed
+            if 'categories' in steps_to_run:
+                mv_input_dir = refined_dir  # Read from enriched data
+            else:
+                mv_input_dir = raw_dir     # Read from raw data
+            
+            multi_value_result = run_multi_value_splitter(mv_input_dir, refined_dir)
+            pipeline_results['steps_executed'].append('multi-value')
+            pipeline_results['step_results']['multi-value'] = multi_value_result
+            
+            print(f"\n✓ Multi-value splitting completed in {multi_value_result['duration_seconds']:.1f}s")
+        
+        # Calculate total duration
+        pipeline_results['total_duration_seconds'] = time.time() - start_time
+        
+        # Print final summary
+        print(f"\n{'='*60}")
+        print(f"    Refinement Pipeline Complete")
+        print(f"{'='*60}")
+        print(f"Total duration: {pipeline_results['total_duration_seconds']:.1f} seconds")
+        print(f"Steps executed: {', '.join(pipeline_results['steps_executed'])}")
+        print(f"Output directory: {refined_dir}/")
+        
+        if country_filter:
+            print(f"Countries filtered: {len(country_filter)}")
+        
+        print(f"{'='*60}\n")
+        
+        logger.info(f"Refinement pipeline completed successfully in {pipeline_results['total_duration_seconds']:.1f}s")
+        return pipeline_results
+        
+    except Exception as e:
+        logger.error(f"Refinement pipeline failed: {e}")
+        raise
+
+
+def get_latest_snapshot() -> str:
+    """
+    Find most recent snapshot directory.
+    
+    Returns:
+        Path to latest snapshot directory
+    """
+    snapshots_dir = "data/snapshots"
+    
+    try:
+        if not os.path.exists(snapshots_dir):
+            raise FileNotFoundError(f"Snapshots directory {snapshots_dir} not found")
+        
+        # Get all subdirectories (ignore .gitkeep)
+        snapshot_dirs = [
+            d for d in os.listdir(snapshots_dir) 
+            if os.path.isdir(os.path.join(snapshots_dir, d)) and d != '.gitkeep'
+        ]
+        
+        if not snapshot_dirs:
+            raise ValueError("No snapshot directories found")
+        
+        # Sort by date (YYYY-MM-DD format should sort correctly)
+        latest_snapshot = sorted(snapshot_dirs)[-1]
+        latest_path = os.path.join(snapshots_dir, latest_snapshot)
+        
+        logger.info(f"Found latest snapshot: {latest_path}")
+        return latest_path
+        
+    except Exception as e:
+        logger.error(f"Failed to find latest snapshot: {e}")
+        raise
+
+
 def parse_arguments() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -645,13 +786,37 @@ def parse_arguments() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python main.py                           # Scrape all countries
-  python main.py --countries france germany # Scrape specific countries
-  python main.py --date 2025-10-26         # Override snapshot date
-  python main.py --dry-run                 # Test without saving
+  # Scraping workflows
+  python main.py --scrape                                          # Scrape all countries
+  python main.py --scrape --countries france germany               # Scrape specific countries
+  python main.py --scrape --date 2025-10-26                     # Override snapshot date
+  python main.py --scrape --dry-run                              # Test without saving
+  
+  # Refinement workflows
+  python main.py --refine                                          # Refine latest snapshot (all steps)
+  python main.py --refine --steps categories --snapshot 2025-10-28  # Specific step and snapshot
+  python main.py --refine --steps multi-value                       # Only multi-value splitting
+  python main.py --refine --steps all --snapshot latest              # All steps on latest
+  
+  # Complete pipeline
+  python main.py --scrape --refine                                 # Scrape then refine
         """
     )
     
+    # Mode selection
+    mode_group = parser.add_mutually_exclusive_group(required=True)
+    mode_group.add_argument(
+        '--scrape',
+        action='store_true',
+        help='Run scraping workflow'
+    )
+    mode_group.add_argument(
+        '--refine',
+        action='store_true',
+        help='Run refinement workflow'
+    )
+    
+    # Scraping arguments
     parser.add_argument(
         '--countries',
         nargs='+',
@@ -667,7 +832,21 @@ Examples:
     parser.add_argument(
         '--dry-run',
         action='store_true',
-        help='Test run without saving files'
+        help='Test run without saving files (scraping only)'
+    )
+    
+    # Refinement arguments
+    parser.add_argument(
+        '--steps',
+        nargs='+',
+        choices=['categories', 'multi-value', 'all'],
+        help='Refinement steps to run: categories, multi-value, all (default: all)'
+    )
+    
+    parser.add_argument(
+        '--snapshot',
+        type=str,
+        help='Snapshot date to refine (YYYY-MM-DD format or "latest")'
     )
     
     return parser.parse_args()
@@ -686,18 +865,63 @@ def main():
                 print(f"Error: Invalid date format '{args.date}'. Use YYYY-MM-DD format.")
                 sys.exit(1)
         
-        # Run scraper
-        summary = run_scraper(
-            snapshot_date=args.date,
-            country_filter=args.countries,
-            dry_run=args.dry_run
-        )
+        # Validate snapshot format if provided for refinement
+        if args.refine and args.snapshot and args.snapshot != 'latest':
+            try:
+                datetime.strptime(args.snapshot, '%Y-%m-%d')
+            except ValueError:
+                print(f"Error: Invalid snapshot format '{args.snapshot}'. Use YYYY-MM-DD format or 'latest'.")
+                sys.exit(1)
         
-        # Exit with appropriate code
-        sys.exit(0 if summary['failed_scrapes'] == 0 else 1)
+        # Run appropriate workflow
+        if args.scrape:
+            # Run scraping workflow
+            scrape_summary = run_scraper(
+                snapshot_date=args.date,
+                country_filter=args.countries,
+                dry_run=args.dry_run
+            )
+            
+            # If refinement is also requested, run it after scraping
+            if args.refine:
+                print(f"\n{'='*60}")
+                print(f"    Starting Refinement After Scraping")
+                print(f"{'='*60}")
+                
+                # Use the snapshot that was just created
+                if scrape_summary.get('snapshot_directory'):
+                    snapshot_date = os.path.basename(scrape_summary['snapshot_directory'])
+                    refine_summary = run_refinement_pipeline(
+                        snapshot_date=snapshot_date,
+                        steps=args.steps,
+                        country_filter=args.countries
+                    )
+                    
+                    # Exit based on both workflows
+                    total_failed = scrape_summary.get('failed_scrapes', 0) + \
+                                 len(refine_summary.get('step_results', {}).get('multi-value', {}).get('processing_stats', {}).get('failed_countries', []))
+                    sys.exit(0 if total_failed == 0 else 1)
+                else:
+                    print("Warning: No snapshot directory created, skipping refinement.")
+                    sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
+            else:
+                # Exit based on scraping only
+                sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
+        
+        elif args.refine:
+            # Run refinement workflow only
+            refine_summary = run_refinement_pipeline(
+                snapshot_date=args.snapshot,
+                steps=args.steps,
+                country_filter=args.countries
+            )
+            
+            # Exit based on refinement results
+            total_failed = len(refine_summary.get('step_results', {}).get('multi-value', {}).get('processing_stats', {}).get('failed_countries', []))
+            sys.exit(0 if total_failed == 0 else 1)
         
     except KeyboardInterrupt:
-        print("\nScraping interrupted by user.")
+        print("\nOperation interrupted by user.")
         sys.exit(130)
     except Exception as e:
         logger.error(f"Fatal error: {e}")

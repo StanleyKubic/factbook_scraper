@@ -324,31 +324,28 @@ def get_latest_snapshot() -> str:
         raise
 
 
-def process_all_countries(snapshot_dir: str) -> Dict[str, Any]:
+def process_all_countries(input_dir: str, output_dir: str) -> Dict[str, Any]:
     """
-    Process all countries in snapshot directory.
+    Process all countries with multi-value splitting.
     
     Args:
-        snapshot_dir: Path to snapshot directory
+        input_dir: Path to input directory (raw/ or refined/)
+        output_dir: Path to output directory (refined/)
     
     Returns:
         Processing summary with statistics
     """
     start_time = time.time()
     
-    # Define directories
-    raw_dir = os.path.join(snapshot_dir, 'raw')
-    refined_dir = os.path.join(snapshot_dir, 'refined')
-    
-    # Create refined directory if not exists
-    os.makedirs(refined_dir, exist_ok=True)
+    # Create output directory if not exists
+    os.makedirs(output_dir, exist_ok=True)
     
     # Load all country files
-    logger.info(f"Loading countries from: {raw_dir}")
-    country_files = load_country_files(raw_dir)
+    logger.info(f"Loading countries from: {input_dir}")
+    country_files = load_country_files(input_dir)
     
     if not country_files:
-        raise ValueError(f"No country files found in {raw_dir}")
+        raise ValueError(f"No country files found in {input_dir}")
     
     # Initialize statistics tracking
     processing_stats = {
@@ -373,7 +370,7 @@ def process_all_countries(snapshot_dir: str) -> Dict[str, Any]:
             refined_data = refine_country(country_data)
             
             # Save refined data
-            output_path = os.path.join(refined_dir, f"{country_slug}.json")
+            output_path = os.path.join(output_dir, f"{country_slug}.json")
             save_refined_country(refined_data, output_path)
             
             # Update statistics
@@ -645,39 +642,52 @@ def validate_refined_structure(refined_data: Dict[str, Any]) -> bool:
         return False
 
 
-def run(snapshot_dir: Optional[str] = None) -> Dict[str, Any]:
+def run(input_dir: Optional[str] = None, output_dir: Optional[str] = None) -> Dict[str, Any]:
     """
     Main execution - process all countries and generate analysis report.
     
     Args:
-        snapshot_dir: Snapshot directory (default: latest)
+        input_dir: Input directory (default: latest snapshot/raw/)
+        output_dir: Output directory (default: latest snapshot/refined/)
     
     Returns:
         Processing summary dictionary
     """
     start_time = time.time()
+    analysis_path = None
     
     try:
-        # Determine snapshot directory
-        if snapshot_dir is None:
+        # Determine directories
+        snapshot_dir = None
+        if input_dir is None:
             snapshot_dir = get_latest_snapshot()
+            input_dir = os.path.join(snapshot_dir, 'raw')
         
-        logger.info(f"Starting multi-value splitting for snapshot: {snapshot_dir}")
+        if output_dir is None:
+            if snapshot_dir is None:
+                snapshot_dir = get_latest_snapshot()
+            output_dir = os.path.join(snapshot_dir, 'refined')
+        
+        logger.info(f"Starting multi-value splitting")
         print(f"\n{'='*60}")
         print(f"    Multi-Value Splitter Started")
         print(f"{'='*60}")
-        print(f"Snapshot: {snapshot_dir}")
+        print(f"Input: {input_dir}")
+        print(f"Output: {output_dir}")
         print(f"{'='*60}\n")
         
         # Process all countries
-        processing_stats = process_all_countries(snapshot_dir)
+        processing_stats = process_all_countries(input_dir, output_dir)
         
-        # Load refined data for analysis
-        refined_dir = os.path.join(snapshot_dir, 'refined')
+        # Load refined data for analysis (input_dir could be raw or refined)
+        if input_dir.endswith('/refined'):
+            refined_dir = input_dir
+            raw_dir = input_dir.replace('/refined', '/raw')
+        else:
+            refined_dir = output_dir  # Use output directory for refined data
+            raw_dir = input_dir
+            
         refined_files = load_country_files(refined_dir)
-        
-        # Load raw data for separator analysis
-        raw_dir = os.path.join(snapshot_dir, 'raw')
         raw_files = load_country_files(raw_dir)
         
         # Analyze multi-value patterns
@@ -689,9 +699,10 @@ def run(snapshot_dir: Optional[str] = None) -> Dict[str, Any]:
         analysis["separator_statistics"] = separator_stats
         
         # Save analysis report
-        analysis_dir = os.path.join(snapshot_dir, 'analysis')
-        analysis_path = os.path.join(analysis_dir, 'multi_value_report.json')
-        save_analysis_report(analysis, analysis_path)
+        if snapshot_dir:
+            analysis_dir = os.path.join(snapshot_dir, 'analysis')
+            analysis_path = os.path.join(analysis_dir, 'multi_value_report.json')
+            save_analysis_report(analysis, analysis_path)
         
         # Print summary statistics
         duration = time.time() - start_time
@@ -722,7 +733,8 @@ def run(snapshot_dir: Optional[str] = None) -> Dict[str, Any]:
         
         print(f"\nOutput:")
         print(f"  Refined files: {refined_dir}/")
-        print(f"  Analysis report: {analysis_path}")
+        if analysis_path:
+            print(f"  Analysis report: {analysis_path}")
         print(f"{'='*60}\n")
         
         # Return summary
