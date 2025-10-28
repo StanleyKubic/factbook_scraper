@@ -90,19 +90,31 @@ def validate_json_structure(data: Dict[str, Any]) -> bool:
     if not isinstance(data, dict):
         return False
     
-    # Check for "result" key
-    if "result" not in data:
+    # Handle two possible structures:
+    # 1. Country pages: {"result":{"data":{"country":...,"fields":...}}}
+    # 2. Category pages: {"data":{"allLaunchpadCategory":{"nodes":[...]}}}
+    
+    data_content = None
+    
+    # Check for "result" key (country pages)
+    if "result" in data:
+        result = data["result"]
+        if not isinstance(result, dict):
+            return False
+        
+        if "data" not in result:
+            return False
+        
+        data_content = result["data"]
+    
+    # Check for direct "data" key (category pages)
+    elif "data" in data:
+        data_content = data["data"]
+    
+    # If neither structure found, invalid
+    else:
         return False
     
-    result = data["result"]
-    if not isinstance(result, dict):
-        return False
-    
-    # Check for "data" key in result
-    if "data" not in result:
-        return False
-    
-    data_content = result["data"]
     if not isinstance(data_content, dict):
         return False
     

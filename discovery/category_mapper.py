@@ -108,59 +108,22 @@ def extract_category_details(category_json: Dict[str, Any]) -> List[Dict[str, An
     """
     Extract full category structure with field lists.
     
+    NOTE: This function is deprecated and no longer used.
+    The category_mapping.json file has been rationalized to only include metadata and mapping.
+    
     Args:
         category_json: Parsed category JSON from fetch_category_mapping()
         
     Returns:
-        List of categories with their fields
+        Empty list (function deprecated)
     """
-    logger.info("Extracting full category structure")
-    
-    categories_details = []
-    
-    try:
-        # Navigate to data.allLaunchpadCategory.nodes
-        categories = safe_navigate(category_json, "data.allLaunchpadCategory.nodes", [])
-        
-        for category in categories:
-            if not isinstance(category, dict):
-                continue
-                
-            category_name = category.get("name", "Unknown")
-            locations = category.get("locations", [])
-            field_labels = category.get("fieldLabels", [])
-            
-            # Process field labels
-            fields = []
-            if isinstance(field_labels, list):
-                for field_label in field_labels:
-                    if isinstance(field_label, dict):
-                        field_info = {
-                            "name": field_label.get("name"),
-                            "database_id": field_label.get("databaseId")
-                        }
-                        fields.append(field_info)
-            
-            category_detail = {
-                "name": category_name,
-                "locations": locations,
-                "field_count": len(fields),
-                "fields": fields
-            }
-            
-            categories_details.append(category_detail)
-        
-        logger.info(f"Processed {len(categories_details)} categories")
-        return categories_details
-        
-    except Exception as e:
-        logger.error(f"Error extracting category details: {e}")
-        return []
+    logger.debug("extract_category_details() called but function is deprecated")
+    return []
 
 
 def save_category_mapping(
     mapping: Dict[str, str], 
-    categories: List[Dict[str, Any]], 
+    categories_count: int, 
     output_path: str
 ) -> None:
     """
@@ -168,7 +131,7 @@ def save_category_mapping(
     
     Args:
         mapping: Database ID to category mapping
-        categories: Full category details
+        categories_count: Number of categories for metadata
         output_path: Path to save file
     """
     logger.info(f"Saving category mapping to: {output_path}")
@@ -177,23 +140,22 @@ def save_category_mapping(
         # Ensure directory exists
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         
-        # Create comprehensive structure
+        # Create rationalized structure with only metadata and mapping
         category_data = {
             "metadata": {
                 "fetched_at": datetime.now(timezone.utc).isoformat(),
                 "source_url": DEFAULT_CATEGORY_URL,
-                "total_categories": len(categories),
+                "total_categories": categories_count,
                 "total_fields": len(mapping)
             },
-            "mapping": mapping,
-            "categories": categories
+            "mapping": mapping
         }
         
         # Write to file with atomic write
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(category_data, f, indent=2, ensure_ascii=False)
         
-        logger.info(f"Successfully saved category mapping with {len(mapping)} field mappings")
+        logger.info(f"Successfully saved rationalized category mapping with {len(mapping)} field mappings")
         
     except Exception as e:
         logger.error(f"Error saving category mapping: {e}")
@@ -259,18 +221,19 @@ def run() -> Dict[str, Any]:
                 "message": "No category mappings could be extracted from the JSON"
             }
         
-        # Extract category details
-        categories = extract_category_details(category_json)
+        # Count categories from the raw JSON for metadata
+        categories = safe_navigate(category_json, "data.allLaunchpadCategory.nodes", [])
+        categories_count = len(categories) if isinstance(categories, list) else 0
         
-        # Save to file
+        # Save to file with rationalized structure
         output_path = os.path.join("data", "index", "category_mapping.json")
-        save_category_mapping(mapping, categories, output_path)
+        save_category_mapping(mapping, categories_count, output_path)
         
         # Return summary
         duration = (datetime.now(timezone.utc) - start_time).total_seconds()
         summary = {
             "success": True,
-            "categories_count": len(categories),
+            "categories_count": categories_count,
             "fields_count": len(mapping),
             "output_path": output_path,
             "duration_seconds": duration,
