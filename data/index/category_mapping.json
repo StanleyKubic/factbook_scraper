@@ -1,0 +1,1025 @@
+{
+  "metadata": {
+    "fetched_at": "2025-10-28T08:58:46.310429+00:00",
+    "source_url": "https://www.cia.gov/the-world-factbook/page-data/sq/d/2962548448.json",
+    "total_categories": 13,
+    "total_fields": 175
+  },
+  "mapping": {
+    "324": "Introduction",
+    "325": "Introduction",
+    "275": "Geography",
+    "276": "Geography",
+    "277": "Geography",
+    "278": "Geography",
+    "279": "Geography",
+    "280": "Geography",
+    "406": "Geography",
+    "281": "Geography",
+    "282": "Geography",
+    "283": "Geography",
+    "284": "Environment",
+    "285": "Geography",
+    "433": "Geography",
+    "444": "Geography",
+    "443": "Geography",
+    "407": "Geography",
+    "287": "Geography",
+    "288": "Environment",
+    "289": "Geography",
+    "427": "Geography",
+    "428": "Geography",
+    "429": "Geography",
+    "430": "Geography",
+    "348": "People and Society",
+    "292": "Geography",
+    "453": "Geography",
+    "295": "Geography",
+    "335": "People and Society",
+    "336": "People and Society",
+    "400": "People and Society",
+    "402": "People and Society",
+    "401": "People and Society",
+    "341": "People and Society",
+    "342": "People and Society",
+    "343": "People and Society",
+    "344": "People and Society",
+    "345": "People and Society",
+    "346": "People and Society",
+    "347": "People and Society",
+    "349": "Environment",
+    "350": "People and Society",
+    "351": "People and Society",
+    "352": "People and Society",
+    "353": "People and Society",
+    "354": "People and Society",
+    "355": "People and Society",
+    "356": "People and Society",
+    "448": "People and Society",
+    "361": "People and Society",
+    "409": "People and Society",
+    "359": "People and Society",
+    "360": "People and Society",
+    "398": "People and Society",
+    "367": "People and Society",
+    "442": "People and Society",
+    "434": "People and Society",
+    "368": "People and Society",
+    "447": "People and Society",
+    "431": "People and Society",
+    "369": "People and Society",
+    "370": "People and Society",
+    "371": "People and Society",
+    "374": "People and Society",
+    "293": "Environment",
+    "294": "Environment",
+    "451": "Environment",
+    "408": "Environment",
+    "274": "Environment",
+    "472": "Environment",
+    "473": "Environment",
+    "422": "Environment",
+    "417": "Environment",
+    "290": "Environment",
+    "463": "Environment",
+    "296": "Government",
+    "297": "Government",
+    "299": "Government",
+    "298": "Government",
+    "301": "Government",
+    "302": "Government",
+    "303": "Government",
+    "304": "Government",
+    "308": "Government",
+    "307": "Government",
+    "309": "Government",
+    "310": "Government",
+    "311": "Government",
+    "312": "Government",
+    "313": "Government",
+    "466": "Government",
+    "467": "Government",
+    "314": "Government",
+    "315": "Government",
+    "318": "Government",
+    "319": "Government",
+    "317": "Government",
+    "305": "Government",
+    "306": "Government",
+    "320": "Government",
+    "321": "Government",
+    "470": "Government",
+    "468": "Government",
+    "322": "Government",
+    "426": "Government",
+    "323": "Government",
+    "207": "Economy",
+    "208": "Economy",
+    "210": "Economy",
+    "211": "Economy",
+    "209": "Economy",
+    "229": "Economy",
+    "214": "Economy",
+    "213": "Economy",
+    "215": "Economy",
+    "216": "Economy",
+    "217": "Economy",
+    "218": "Economy",
+    "220": "Economy",
+    "373": "Economy",
+    "221": "Economy",
+    "223": "Economy",
+    "423": "Economy",
+    "222": "Economy",
+    "449": "Economy",
+    "224": "Economy",
+    "227": "Economy",
+    "225": "Economy",
+    "238": "Economy",
+    "239": "Economy",
+    "241": "Economy",
+    "240": "Economy",
+    "242": "Economy",
+    "403": "Economy",
+    "243": "Economy",
+    "245": "Economy",
+    "246": "Economy",
+    "249": "Economy",
+    "251": "Energy",
+    "435": "Energy",
+    "436": "Energy",
+    "452": "Energy",
+    "437": "Energy",
+    "438": "Energy",
+    "440": "Energy",
+    "441": "Energy",
+    "196": "Communications",
+    "197": "Communications",
+    "199": "Communications",
+    "202": "Communications",
+    "204": "Communications",
+    "206": "Communications",
+    "205": "Communications",
+    "378": "Transportation",
+    "379": "Transportation",
+    "382": "Transportation",
+    "384": "Transportation",
+    "387": "Transportation",
+    "465": "Transportation",
+    "389": "Transportation",
+    "331": "Military and Security",
+    "330": "Military and Security",
+    "410": "Military and Security",
+    "411": "Military and Security",
+    "333": "Military and Security",
+    "412": "Military and Security",
+    "332": "Military and Security",
+    "455": "Space",
+    "456": "Space",
+    "457": "Space",
+    "413": "Terrorism",
+    "327": "Transnational Issues",
+    "328": "Transnational Issues",
+    "329": "Transnational Issues"
+  },
+  "categories": [
+    {
+      "name": "Introduction",
+      "locations": [
+        "place",
+        "summary"
+      ],
+      "field_count": 2,
+      "fields": [
+        {
+          "name": "Preliminary statement",
+          "database_id": "324"
+        },
+        {
+          "name": "Background",
+          "database_id": "325"
+        }
+      ]
+    },
+    {
+      "name": "Geography",
+      "locations": [
+        "place",
+        "summary"
+      ],
+      "field_count": 27,
+      "fields": [
+        {
+          "name": "Geographic overview",
+          "database_id": "275"
+        },
+        {
+          "name": "Location",
+          "database_id": "276"
+        },
+        {
+          "name": "Geographic coordinates",
+          "database_id": "277"
+        },
+        {
+          "name": "Map references",
+          "database_id": "278"
+        },
+        {
+          "name": "Area",
+          "database_id": "279"
+        },
+        {
+          "name": "Area - comparative",
+          "database_id": "280"
+        },
+        {
+          "name": "Area - rankings",
+          "database_id": "406"
+        },
+        {
+          "name": "Land boundaries",
+          "database_id": "281"
+        },
+        {
+          "name": "Coastline",
+          "database_id": "282"
+        },
+        {
+          "name": "Maritime claims",
+          "database_id": "283"
+        },
+        {
+          "name": "Climate",
+          "database_id": "284"
+        },
+        {
+          "name": "Terrain",
+          "database_id": "285"
+        },
+        {
+          "name": "Ocean volume",
+          "database_id": "433"
+        },
+        {
+          "name": "Major ocean currents",
+          "database_id": "444"
+        },
+        {
+          "name": "Bathymetry",
+          "database_id": "443"
+        },
+        {
+          "name": "Elevation",
+          "database_id": "407"
+        },
+        {
+          "name": "Natural resources",
+          "database_id": "287"
+        },
+        {
+          "name": "Land use",
+          "database_id": "288"
+        },
+        {
+          "name": "Irrigated land",
+          "database_id": "289"
+        },
+        {
+          "name": "Major lakes (area sq km)",
+          "database_id": "427"
+        },
+        {
+          "name": "Major rivers (by length in km)",
+          "database_id": "428"
+        },
+        {
+          "name": "Major watersheds (area sq km)",
+          "database_id": "429"
+        },
+        {
+          "name": "Major aquifers",
+          "database_id": "430"
+        },
+        {
+          "name": "Population distribution",
+          "database_id": "348"
+        },
+        {
+          "name": "Natural hazards",
+          "database_id": "292"
+        },
+        {
+          "name": "Wonders of the World",
+          "database_id": "453"
+        },
+        {
+          "name": "Geography - note",
+          "database_id": "295"
+        }
+      ]
+    },
+    {
+      "name": "People and Society",
+      "locations": [
+        "place",
+        "summary"
+      ],
+      "field_count": 37,
+      "fields": [
+        {
+          "name": "Population",
+          "database_id": "335"
+        },
+        {
+          "name": "Nationality",
+          "database_id": "336"
+        },
+        {
+          "name": "Ethnic groups",
+          "database_id": "400"
+        },
+        {
+          "name": "Languages",
+          "database_id": "402"
+        },
+        {
+          "name": "Religions",
+          "database_id": "401"
+        },
+        {
+          "name": "Age structure",
+          "database_id": "341"
+        },
+        {
+          "name": "Dependency ratios",
+          "database_id": "342"
+        },
+        {
+          "name": "Median age",
+          "database_id": "343"
+        },
+        {
+          "name": "Population growth rate",
+          "database_id": "344"
+        },
+        {
+          "name": "Birth rate",
+          "database_id": "345"
+        },
+        {
+          "name": "Death rate",
+          "database_id": "346"
+        },
+        {
+          "name": "Net migration rate",
+          "database_id": "347"
+        },
+        {
+          "name": "Population distribution",
+          "database_id": "348"
+        },
+        {
+          "name": "Urbanization",
+          "database_id": "349"
+        },
+        {
+          "name": "Major urban areas - population",
+          "database_id": "350"
+        },
+        {
+          "name": "Sex ratio",
+          "database_id": "351"
+        },
+        {
+          "name": "Mother's mean age at first birth",
+          "database_id": "352"
+        },
+        {
+          "name": "Maternal mortality ratio",
+          "database_id": "353"
+        },
+        {
+          "name": "Infant mortality rate",
+          "database_id": "354"
+        },
+        {
+          "name": "Life expectancy at birth",
+          "database_id": "355"
+        },
+        {
+          "name": "Total fertility rate",
+          "database_id": "356"
+        },
+        {
+          "name": "Gross reproduction rate",
+          "database_id": "448"
+        },
+        {
+          "name": "Drinking water source",
+          "database_id": "361"
+        },
+        {
+          "name": "Health expenditure",
+          "database_id": "409"
+        },
+        {
+          "name": "Physician density",
+          "database_id": "359"
+        },
+        {
+          "name": "Hospital bed density",
+          "database_id": "360"
+        },
+        {
+          "name": "Sanitation facility access",
+          "database_id": "398"
+        },
+        {
+          "name": "Obesity - adult prevalence rate",
+          "database_id": "367"
+        },
+        {
+          "name": "Alcohol consumption per capita",
+          "database_id": "442"
+        },
+        {
+          "name": "Tobacco use",
+          "database_id": "434"
+        },
+        {
+          "name": "Children under the age of 5 years underweight",
+          "database_id": "368"
+        },
+        {
+          "name": "Currently married women (ages 15-49)",
+          "database_id": "447"
+        },
+        {
+          "name": "Child marriage",
+          "database_id": "431"
+        },
+        {
+          "name": "Education expenditure",
+          "database_id": "369"
+        },
+        {
+          "name": "Literacy",
+          "database_id": "370"
+        },
+        {
+          "name": "School life expectancy (primary to tertiary education)",
+          "database_id": "371"
+        },
+        {
+          "name": "People - note",
+          "database_id": "374"
+        }
+      ]
+    },
+    {
+      "name": "Environment",
+      "locations": [
+        "place"
+      ],
+      "field_count": 14,
+      "fields": [
+        {
+          "name": "Environmental issues",
+          "database_id": "293"
+        },
+        {
+          "name": "International environmental agreements",
+          "database_id": "294"
+        },
+        {
+          "name": "World biomes",
+          "database_id": "451"
+        },
+        {
+          "name": "Climate",
+          "database_id": "284"
+        },
+        {
+          "name": "Land use",
+          "database_id": "288"
+        },
+        {
+          "name": "Urbanization",
+          "database_id": "349"
+        },
+        {
+          "name": "Marine fisheries",
+          "database_id": "408"
+        },
+        {
+          "name": "Carbon dioxide emissions",
+          "database_id": "274"
+        },
+        {
+          "name": "Particulate matter emissions",
+          "database_id": "472"
+        },
+        {
+          "name": "Methane emissions",
+          "database_id": "473"
+        },
+        {
+          "name": "Waste and recycling",
+          "database_id": "422"
+        },
+        {
+          "name": "Total water withdrawal",
+          "database_id": "417"
+        },
+        {
+          "name": "Total renewable water resources",
+          "database_id": "290"
+        },
+        {
+          "name": "Geoparks",
+          "database_id": "463"
+        }
+      ]
+    },
+    {
+      "name": "Government",
+      "locations": [
+        "place",
+        "summary"
+      ],
+      "field_count": 31,
+      "fields": [
+        {
+          "name": "Country name",
+          "database_id": "296"
+        },
+        {
+          "name": "Union name",
+          "database_id": "297"
+        },
+        {
+          "name": "Government type",
+          "database_id": "299"
+        },
+        {
+          "name": "Dependency status",
+          "database_id": "298"
+        },
+        {
+          "name": "Capital",
+          "database_id": "301"
+        },
+        {
+          "name": "Administrative divisions",
+          "database_id": "302"
+        },
+        {
+          "name": "Member states",
+          "database_id": "303"
+        },
+        {
+          "name": "Dependent areas",
+          "database_id": "304"
+        },
+        {
+          "name": "Legal system",
+          "database_id": "308"
+        },
+        {
+          "name": "Constitution",
+          "database_id": "307"
+        },
+        {
+          "name": "International law organization participation",
+          "database_id": "309"
+        },
+        {
+          "name": "Citizenship",
+          "database_id": "310"
+        },
+        {
+          "name": "Suffrage",
+          "database_id": "311"
+        },
+        {
+          "name": "Executive branch",
+          "database_id": "312"
+        },
+        {
+          "name": "Legislative branch",
+          "database_id": "313"
+        },
+        {
+          "name": "Legislative branch - lower chamber",
+          "database_id": "466"
+        },
+        {
+          "name": "Legislative branch - upper chamber",
+          "database_id": "467"
+        },
+        {
+          "name": "Judicial branch",
+          "database_id": "314"
+        },
+        {
+          "name": "Political parties",
+          "database_id": "315"
+        },
+        {
+          "name": "Diplomatic representation in the US",
+          "database_id": "318"
+        },
+        {
+          "name": "Diplomatic representation from the US",
+          "database_id": "319"
+        },
+        {
+          "name": "International organization participation",
+          "database_id": "317"
+        },
+        {
+          "name": "Independence",
+          "database_id": "305"
+        },
+        {
+          "name": "National holiday",
+          "database_id": "306"
+        },
+        {
+          "name": "Flag",
+          "database_id": "320"
+        },
+        {
+          "name": "National symbol(s)",
+          "database_id": "321"
+        },
+        {
+          "name": "National color(s)",
+          "database_id": "470"
+        },
+        {
+          "name": "National coat of arms",
+          "database_id": "468"
+        },
+        {
+          "name": "National anthem(s)",
+          "database_id": "322"
+        },
+        {
+          "name": "National heritage",
+          "database_id": "426"
+        },
+        {
+          "name": "Government - note",
+          "database_id": "323"
+        }
+      ]
+    },
+    {
+      "name": "Economy",
+      "locations": [
+        "place",
+        "summary"
+      ],
+      "field_count": 32,
+      "fields": [
+        {
+          "name": "Economic overview",
+          "database_id": "207"
+        },
+        {
+          "name": "Real GDP (purchasing power parity)",
+          "database_id": "208"
+        },
+        {
+          "name": "Real GDP growth rate",
+          "database_id": "210"
+        },
+        {
+          "name": "Real GDP per capita",
+          "database_id": "211"
+        },
+        {
+          "name": "GDP (official exchange rate)",
+          "database_id": "209"
+        },
+        {
+          "name": "Inflation rate (consumer prices)",
+          "database_id": "229"
+        },
+        {
+          "name": "GDP - composition, by sector of origin",
+          "database_id": "214"
+        },
+        {
+          "name": "GDP - composition, by end use",
+          "database_id": "213"
+        },
+        {
+          "name": "Agricultural products",
+          "database_id": "215"
+        },
+        {
+          "name": "Industries",
+          "database_id": "216"
+        },
+        {
+          "name": "Industrial production growth rate",
+          "database_id": "217"
+        },
+        {
+          "name": "Labor force",
+          "database_id": "218"
+        },
+        {
+          "name": "Unemployment rate",
+          "database_id": "220"
+        },
+        {
+          "name": "Youth unemployment rate (ages 15-24)",
+          "database_id": "373"
+        },
+        {
+          "name": "Population below poverty line",
+          "database_id": "221"
+        },
+        {
+          "name": "Gini Index coefficient - distribution of family income",
+          "database_id": "223"
+        },
+        {
+          "name": "Average household expenditures",
+          "database_id": "423"
+        },
+        {
+          "name": "Household income or consumption by percentage share",
+          "database_id": "222"
+        },
+        {
+          "name": "Remittances",
+          "database_id": "449"
+        },
+        {
+          "name": "Budget",
+          "database_id": "224"
+        },
+        {
+          "name": "Public debt",
+          "database_id": "227"
+        },
+        {
+          "name": "Taxes and other revenues",
+          "database_id": "225"
+        },
+        {
+          "name": "Current account balance",
+          "database_id": "238"
+        },
+        {
+          "name": "Exports",
+          "database_id": "239"
+        },
+        {
+          "name": "Exports - partners",
+          "database_id": "241"
+        },
+        {
+          "name": "Exports - commodities",
+          "database_id": "240"
+        },
+        {
+          "name": "Imports",
+          "database_id": "242"
+        },
+        {
+          "name": "Imports - partners",
+          "database_id": "403"
+        },
+        {
+          "name": "Imports - commodities",
+          "database_id": "243"
+        },
+        {
+          "name": "Reserves of foreign exchange and gold",
+          "database_id": "245"
+        },
+        {
+          "name": "Debt - external",
+          "database_id": "246"
+        },
+        {
+          "name": "Exchange rates",
+          "database_id": "249"
+        }
+      ]
+    },
+    {
+      "name": "Energy",
+      "locations": [
+        "place"
+      ],
+      "field_count": 8,
+      "fields": [
+        {
+          "name": "Electricity access",
+          "database_id": "251"
+        },
+        {
+          "name": "Electricity",
+          "database_id": "435"
+        },
+        {
+          "name": "Electricity generation sources",
+          "database_id": "436"
+        },
+        {
+          "name": "Nuclear energy",
+          "database_id": "452"
+        },
+        {
+          "name": "Coal",
+          "database_id": "437"
+        },
+        {
+          "name": "Petroleum",
+          "database_id": "438"
+        },
+        {
+          "name": "Natural gas",
+          "database_id": "440"
+        },
+        {
+          "name": "Energy consumption per capita",
+          "database_id": "441"
+        }
+      ]
+    },
+    {
+      "name": "Communications",
+      "locations": [
+        "place"
+      ],
+      "field_count": 7,
+      "fields": [
+        {
+          "name": "Telephones - fixed lines",
+          "database_id": "196"
+        },
+        {
+          "name": "Telephones - mobile cellular",
+          "database_id": "197"
+        },
+        {
+          "name": "Broadcast media",
+          "database_id": "199"
+        },
+        {
+          "name": "Internet country code",
+          "database_id": "202"
+        },
+        {
+          "name": "Internet users",
+          "database_id": "204"
+        },
+        {
+          "name": "Broadband - fixed subscriptions",
+          "database_id": "206"
+        },
+        {
+          "name": "Communications - note",
+          "database_id": "205"
+        }
+      ]
+    },
+    {
+      "name": "Transportation",
+      "locations": [
+        "place"
+      ],
+      "field_count": 7,
+      "fields": [
+        {
+          "name": "Civil aircraft registration country code prefix",
+          "database_id": "378"
+        },
+        {
+          "name": "Airports",
+          "database_id": "379"
+        },
+        {
+          "name": "Heliports",
+          "database_id": "382"
+        },
+        {
+          "name": "Railways",
+          "database_id": "384"
+        },
+        {
+          "name": "Merchant marine",
+          "database_id": "387"
+        },
+        {
+          "name": "Ports",
+          "database_id": "465"
+        },
+        {
+          "name": "Transportation - note",
+          "database_id": "389"
+        }
+      ]
+    },
+    {
+      "name": "Military and Security",
+      "locations": [
+        "place"
+      ],
+      "field_count": 7,
+      "fields": [
+        {
+          "name": "Military and security forces",
+          "database_id": "331"
+        },
+        {
+          "name": "Military expenditures",
+          "database_id": "330"
+        },
+        {
+          "name": "Military and security service personnel strengths",
+          "database_id": "410"
+        },
+        {
+          "name": "Military equipment inventories and acquisitions",
+          "database_id": "411"
+        },
+        {
+          "name": "Military service age and obligation",
+          "database_id": "333"
+        },
+        {
+          "name": "Military deployments",
+          "database_id": "412"
+        },
+        {
+          "name": "Military - note",
+          "database_id": "332"
+        }
+      ]
+    },
+    {
+      "name": "Space",
+      "locations": [
+        "place"
+      ],
+      "field_count": 3,
+      "fields": [
+        {
+          "name": "Space agency/agencies",
+          "database_id": "455"
+        },
+        {
+          "name": "Space launch site(s)",
+          "database_id": "456"
+        },
+        {
+          "name": "Space program overview",
+          "database_id": "457"
+        }
+      ]
+    },
+    {
+      "name": "Terrorism",
+      "locations": [
+        "place"
+      ],
+      "field_count": 1,
+      "fields": [
+        {
+          "name": "Terrorist group(s)",
+          "database_id": "413"
+        }
+      ]
+    },
+    {
+      "name": "Transnational Issues",
+      "locations": [
+        "place"
+      ],
+      "field_count": 3,
+      "fields": [
+        {
+          "name": "Refugees and internally displaced persons",
+          "database_id": "327"
+        },
+        {
+          "name": "Trafficking in persons",
+          "database_id": "328"
+        },
+        {
+          "name": "Illicit drugs",
+          "database_id": "329"
+        }
+      ]
+    }
+  ]
+}

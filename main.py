@@ -23,6 +23,7 @@ from scrapers.fetcher import fetch_page_data
 from scrapers.parser import parse_country_data
 from utils.config import load_config
 from utils.logger import get_logger
+from discovery.category_mapper import fetch_category_mapping, save_category_mapping
 
 # Module-level logger
 logger = get_logger(__name__)
@@ -51,6 +52,13 @@ def run_scraper(
         # Load configuration and countries
         config = load_config()
         countries = load_countries()
+        
+        # Load category mapping for enrichment
+        category_mapping = load_category_mapping()
+        if category_mapping:
+            logger.info(f"Category mapping loaded with {len(category_mapping)} mappings")
+        else:
+            logger.warning("No category mapping available - proceeding without enrichment")
         
         # Apply country filter if provided
         if country_filter:
@@ -81,8 +89,8 @@ def run_scraper(
         # Sequential processing
         for i, country in enumerate(countries, 1):
             try:
-                # Scrape single country
-                result = scrape_country(country)
+                # Scrape single country with category mapping
+                result = scrape_country(country, category_mapping)
                 scrape_results.append(result)
                 
                 # Save country data (unless dry run)
@@ -137,12 +145,13 @@ def run_scraper(
         raise
 
 
-def scrape_country(country: Dict[str, Any]) -> Dict[str, Any]:
+def scrape_country(country: Dict[str, Any], category_mapping: Dict[str, str] = None) -> Dict[str, Any]:
     """
-    Scrape single country (fetch + parse).
+    Scrape single country (fetch + parse + enrich).
     
     Args:
         country: Country object from countries.json
+        category_mapping: Database ID to category mapping
     
     Returns:
         Scrape result with data or error
@@ -195,6 +204,10 @@ def scrape_country(country: Dict[str, Any]) -> Dict[str, Any]:
                 'error': 'parse_failed',
                 'error_details': parsed_data['metadata']['error']
             }
+        
+        # Enrich with categories if mapping provided
+        if category_mapping:
+            parsed_data = enrich_with_categories(parsed_data, category_mapping)
         
         duration = time.time() - start_time
         logger.debug(f"Successfully scraped {slug} in {duration:.2f}s")
@@ -535,6 +548,73 @@ def print_summary(scrape_results: List[Dict[str, Any]], duration: float) -> None
         print(f"\nOutput: data/snapshots/{latest_snapshot}/")
     
     print(f"{'='*60}\n")
+
+
+def load_category_mapping() -> Dict[str, str]:
+    """
+    Load category mapping from category_mapping.json file.
+    
+    Returns:
+        Dictionary mapping database_id to category
+    """
+    try:
+        categories_path = os.path.join('data', 'index', 'category_mapping.json')
+        with open(categories_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        mapping = data.get('mapping', {})
+        logger.info(f"Loaded {len(mapping)} category mappings from {categories_path}")
+        return mapping
+        
+    except FileNotFoundError:
+        logger.warning("Category mapping file not found. Run category discovery first.")
+        return {}
+    except Exception as e:
+        logger.error(f"Failed to load category mapping: {e}")
+        return {}
+
+
+def enrich_with_categories(country_data: Dict[str, Any], category_mapping: Dict[str, str]) -> Dict[str, Any]:
+    """
+    Enrich country data with category information based on database_id.
+    
+    Args:
+        country_data: Parsed country data from parser
+        category_mapping: Database ID to category mapping
+    
+    Returns:
+        Enriched country data with category field added to each field
+    """
+    try:
+        # Get fields from country data
+        fields = country_data.get('fields', [])
+        enriched_fields = []
+        
+        for field in fields:
+            enriched_field = field.copy()
+            database_id = field.get('database_id')
+            
+            # Add category if mapping exists
+            if database_id and database_id in category_mapping:
+                enriched_field['category'] = category_mapping[database_id]
+            else:
+                enriched_field['category'] = None
+            
+            enriched_fields.append(enriched_field)
+        
+        # Update country data with enriched fields
+        enriched_data = country_data.copy()
+        enriched_data['fields'] = enriched_fields
+        
+        # Count fields with categories
+        fields_with_categories = sum(1 for f in enriched_fields if f.get('category'))
+        logger.debug(f"Enriched {fields_with_categories}/{len(enriched_fields)} fields with categories")
+        
+        return enriched_data
+        
+    except Exception as e:
+        logger.error(f"Failed to enrich with categories: {e}")
+        return country_data
 
 
 def load_countries() -> List[Dict[str, Any]]:

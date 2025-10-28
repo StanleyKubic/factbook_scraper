@@ -106,11 +106,14 @@ def validate_json_structure(data: Dict[str, Any]) -> bool:
     if not isinstance(data_content, dict):
         return False
     
-    # Check for country or fields key
-    if "country" not in data_content and "fields" not in data_content:
-        return False
+    # Check for valid content - could be country data, category data, or other
+    # Country pages have "country" and/or "fields"
+    # Category pages have "allLaunchpadCategory"
+    # Other pages might have different structures
+    valid_keys = ["country", "fields", "allLaunchpadCategory"]
+    has_valid_content = any(key in data_content for key in valid_keys)
     
-    return True
+    return has_valid_content
 
 
 def _classify_error(response: Optional[requests.Response] = None, 

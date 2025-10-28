@@ -145,6 +145,7 @@ def extract_fields(page_data: Dict[str, Any]) -> List[Dict[str, Any]]:
             simplified_field = {
                 "name": field.get("name"),
                 "data": field.get("data"),  # CRITICAL: Preserve raw content untouched!
+                "database_id": extract_database_id(field.get("fieldLabel", [])),
                 "subfields": simplify_subfields(field.get("subfields", [])),
                 "has_ranking": extract_has_ranking(field.get("fieldLabel", [])),
                 "media": simplify_media(field.get("media", []))
@@ -181,6 +182,31 @@ def simplify_subfields(subfields: List[Dict[str, Any]]) -> List[str]:
                 labels.append(label)
     
     return labels
+
+
+def extract_database_id(field_label: List[Dict[str, Any]]) -> Optional[str]:
+    """
+    Extract database_id from complex fieldLabel structure.
+    
+    Args:
+        field_label: fieldLabel array from field
+    
+    Returns:
+        Database ID as string or None if not found
+    """
+    if not isinstance(field_label, list) or not field_label:
+        return None
+    
+    try:
+        # Get first element (typically only one)
+        first_label = field_label[0]
+        if isinstance(first_label, dict):
+            database_id = first_label.get("databaseId")
+            return str(database_id) if database_id is not None else None
+    except (IndexError, TypeError):
+        return None
+    
+    return None
 
 
 def extract_has_ranking(field_label: List[Dict[str, Any]]) -> bool:
