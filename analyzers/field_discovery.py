@@ -1,17 +1,14 @@
 """
 Field Discovery & Coverage Analysis Engine for CIA Factbook Scraper.
 
-This module analyzes all scraped country data to discover unique fields,
-calculate coverage statistics, detect subfield patterns, and create
-comprehensive field catalogs for type detection and value extraction.
+This module analyzes all scraped country data to discover unique fields
+and calculate coverage statistics for main fields only.
 
 Key capabilities:
 - Load and validate 250+ country JSON files efficiently
-- Extract field metadata with comprehensive tracking
-- Calculate coverage percentages and missing country analysis
-- Detect subfield co-occurrence patterns
-- Generate intelligent data samples for type analysis
-- Create structured field catalog matching exact output specification
+- Extract main field metadata with coverage tracking
+- Calculate coverage percentages for main fields
+- Create simplified field catalog focusing on main fields only
 """
 
 import json
@@ -57,9 +54,6 @@ def discover_fields(snapshot_dir: str) -> dict:
     
     # Calculate coverage statistics
     field_registry = calculate_coverage(field_registry, total_countries)
-    
-    # Analyze subfield patterns
-    field_registry = analyze_subfield_patterns(field_registry)
     
     # Generate summary statistics
     summary = generate_summary_statistics(field_registry, total_countries)
@@ -167,16 +161,14 @@ def extract_field_info(field: dict, country_slug: str) -> dict:
         'name': field.get('name'),
         'database_id': field.get('database_id'),
         'category': field.get('category'),
-        'subfields': field.get('subfields', []),
         'has_ranking': field.get('has_ranking', False),
-        'data_sample': field.get('data', ''),
         'data_length': len(field.get('data', ''))
     }
 
 
 def build_field_registry(country_data_list: List[dict]) -> dict:
     """
-    Build comprehensive registry of all fields across all countries.
+    Build registry of all main fields across all countries.
     
     Args:
         country_data_list: List of country data objects
@@ -188,7 +180,6 @@ def build_field_registry(country_data_list: List[dict]) -> dict:
     start_time = time.time()
     
     field_registry = {}
-    country_slugs = [country['slug'] for country in country_data_list]
     
     for country in country_data_list:
         country_slug = country['slug']
@@ -209,8 +200,6 @@ def build_field_registry(country_data_list: List[dict]) -> dict:
                     'database_id': field_info['database_id'],
                     'category': field_info['category'],
                     'countries_with_field': [],
-                    'subfield_occurrences': {},
-                    'sample_data': [],
                     'has_ranking': field_info['has_ranking'],
                     'data_lengths': []
                 }
@@ -220,16 +209,6 @@ def build_field_registry(country_data_list: List[dict]) -> dict:
             
             # Add country to field's country list
             field_entry['countries_with_field'].append(country_slug)
-            
-            # Track subfield occurrences
-            for subfield in field_info['subfields']:
-                if subfield not in field_entry['subfield_occurrences']:
-                    field_entry['subfield_occurrences'][subfield] = []
-                field_entry['subfield_occurrences'][subfield].append(country_slug)
-            
-            # Collect sample data (up to 10 samples per field)
-            if len(field_entry['sample_data']) < 10:
-                field_entry['sample_data'].append(field_info['data_sample'])
             
             # Track data characteristics
             field_entry['data_lengths'].append(field_info['data_length'])
@@ -269,75 +248,10 @@ def calculate_coverage(field_registry: dict, total_countries: int) -> dict:
         
         # Update field entry with coverage info
         field_entry['coverage'] = {
-            'present_in_countries': present_count,
-            'total_countries': total_countries,
-            'percentage': round(coverage_percentage, 1),
-            'missing_in': missing_countries
+            'percentage': round(coverage_percentage, 1)
         }
-        
-        # Calculate subfield frequencies
-        for subfield, country_list in field_entry['subfield_occurrences'].items():
-            field_entry['subfield_occurrences'][subfield] = {
-                'count': len(country_list),
-                'percentage': round((len(country_list) / present_count) * 100, 1) if present_count > 0 else 0
-            }
     
     logger.info(f"Coverage calculation completed in {time.time() - start_time:.2f}s")
-    return field_registry
-
-
-def analyze_subfield_patterns(field_registry: dict) -> dict:
-    """
-    Detect patterns in subfield co-occurrence.
-    
-    Args:
-        field_registry: Field registry with subfield data
-    
-    Returns:
-        Field registry enriched with pattern analysis
-    """
-    logger.info("Analyzing subfield patterns")
-    start_time = time.time()
-    
-    for field_name, field_entry in field_registry.items():
-        subfield_data = field_entry['subfield_occurrences']
-        countries_with_field = field_entry['countries_with_field']
-        total_countries_with_field = len(countries_with_field)
-        
-        if not subfield_data:
-            field_entry['subfields'] = {
-                'discovered': [],
-                'frequency': {},
-                'patterns': {
-                    'always_together': [],
-                    'optional': []
-                }
-            }
-            continue
-        
-        # Identify always-together subfields (appear in 100% of countries with this field)
-        always_together = []
-        optional = []
-        
-        for subfield, country_list in subfield_data.items():
-            frequency = len(country_list)
-            frequency_percentage = (frequency / total_countries_with_field) * 100 if total_countries_with_field > 0 else 0
-            
-            if frequency_percentage >= 100:
-                always_together.append(subfield)
-            elif frequency_percentage > 0:
-                optional.append(subfield)
-        
-        field_entry['subfields'] = {
-            'discovered': list(subfield_data.keys()),
-            'frequency': subfield_data,
-            'patterns': {
-                'always_together': sorted(always_together),
-                'optional': sorted(optional)
-            }
-        }
-    
-    logger.info(f"Subfield pattern analysis completed in {time.time() - start_time:.2f}s")
     return field_registry
 
 
@@ -400,52 +314,6 @@ def generate_summary_statistics(field_registry: dict, total_countries: int) -> d
     return summary
 
 
-def sample_data_values(values: List[str], max_samples: int = 10) -> List[str]:
-    """
-    Intelligently sample representative data values.
-    
-    Args:
-        values: All data values for a field
-        max_samples: Maximum samples to return (default 10)
-    
-    Returns:
-        Representative sample subset
-    """
-    if not values:
-        return []
-    
-    if len(values) <= max_samples:
-        return values.copy()
-    
-    # Sample for diversity - prioritize different lengths and content
-    samples = []
-    remaining_values = values.copy()
-    
-    # Always include first and last values
-    if remaining_values:
-        samples.append(remaining_values.pop(0))
-    
-    if remaining_values:
-        samples.append(remaining_values.pop())
-    
-    # Sample middle values for length diversity
-    while len(samples) < max_samples and remaining_values:
-        # Sort remaining by length to get diversity
-        remaining_values.sort(key=len)
-        
-        # Take from different parts of the sorted list
-        mid_idx = len(remaining_values) // 2
-        samples.append(remaining_values.pop(mid_idx))
-        
-        # Shuffle and take first to get randomness
-        if remaining_values:
-            import random
-            random.shuffle(remaining_values)
-            samples.append(remaining_values.pop(0))
-    
-    return samples
-
-
 def format_catalog_output(field_registry: dict, summary: dict, metadata: dict) -> dict:
     """
     Format field registry into final catalog structure.
@@ -468,9 +336,6 @@ def format_catalog_output(field_registry: dict, summary: dict, metadata: dict) -
     }
     
     for field_name, field_entry in field_registry.items():
-        # Prepare sample data
-        sample_data = sample_data_values(field_entry['sample_data'])
-        
         # Calculate data characteristics
         data_lengths = field_entry['data_lengths']
         data_characteristics = {
@@ -483,15 +348,7 @@ def format_catalog_output(field_registry: dict, summary: dict, metadata: dict) -
         catalog['fields'][field_name] = {
             'database_id': field_entry['database_id'],
             'category': field_entry['category'],
-            'coverage': field_entry['coverage'],
-            'subfields': field_entry['subfields'],
-            'has_ranking': field_entry['has_ranking'],
-            'sample_data': sample_data,
-            'data_characteristics': {
-                'min_length': data_characteristics['min_length'],
-                'max_length': data_characteristics['max_length'],
-                'avg_length': round(data_characteristics['avg_length'], 1)
-            }
+            'coverage': field_entry['coverage']
         }
     
     logger.info(f"Catalog formatting completed in {time.time() - start_time:.2f}s")
@@ -602,7 +459,7 @@ def validate_country_data(data: dict) -> bool:
 
 def print_summary_report(catalog: dict, duration: float) -> None:
     """
-    Print comprehensive summary report to console.
+    Print simplified summary report to console.
     
     Args:
         catalog: Complete field catalog
