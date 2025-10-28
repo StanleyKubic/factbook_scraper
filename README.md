@@ -18,27 +18,127 @@ graph TD
     D --> E[Refinement Phase]
     
     subgraph "Discovery Phase"
-        B1[Sitemap Parser] --> B2[Category Mapper]
-        B2 --> B3[Structure Analyzer]
+        B1[sitemap_parser.py] --> B1F[data/index/countries.json]
+        B2[category_mapper.py] --> B2F[data/index/category_mapping.json]
+        B3[structure_analyzer.py] --> B3F[data/index/structure_analysis.json]
+        B1F --> B2F
+        B2F --> B3F
     end
     
     subgraph "Scraping Phase"
-        C1[Fetch Countries Index] --> C2[Sequential Country Processing]
-        C2 --> C3[Data Fetching]
-        C3 --> C4[Data Parsing]
+        C1[Load Index Files] --> C2[Sequential Processing]
+        C2 --> C3[fetcher.py: HTTP Request]
+        C3 --> C4[parser.py: JSON Transform]
         C4 --> C5[Save Raw Files]
+        B1F --> C1
+        B2F --> C1
+        C5 --> CF[data/snapshots/YYYY-MM-DD/raw/]
     end
     
     subgraph "Analysis Phase"
-        D1[Load Raw Data] --> D2[Field Discovery]
-        D2 --> D3[Coverage Analysis]
-        D3 --> D4[Generate Catalog]
+        D1[Load Raw Files] --> D2[field_discovery.py]
+        CF --> D1
+        D2 --> D3[Field Registry]
+        D3 --> D4[Coverage Analysis]
+        D4 --> DF[data/snapshots/YYYY-MM-DD/analysis/field_catalog.json]
     end
     
     subgraph "Refinement Phase"
-        E1[Multi-Value Detection] --> E2[Data Splitting]
-        E2 --> E3[Structure Normalization]
-        E3 --> E4[Save Refined Files]
+        E1[Load Raw Files] --> E2[multi_value_splitter.py]
+        CF --> E1
+        E2 --> E3[Multi-Value Detection]
+        E3 --> E4[Data Splitting & Normalization]
+        E4 --> EF[data/snapshots/YYYY-MM-DD/refined/]
+        E4 --> ER[data/snapshots/YYYY-MM-DD/analysis/multi_value_report.json]
+    end
+```
+
+### Detailed File Interaction Flow
+
+```mermaid
+graph LR
+    subgraph "Input Sources"
+        WEB[CIA Factbook Website]
+        CONFIG[config.yaml]
+    end
+    
+    subgraph "Discovery Outputs"
+        COUNTRIES[data/index/countries.json]
+        CATEGORIES[data/index/category_mapping.json]
+        STRUCTURE[data/index/structure_analysis.json]
+    end
+    
+    subgraph "Processing Pipeline"
+        FETCHER[scrapers/fetcher.py]
+        PARSER[scrapers/parser.py]
+        ANALYZER[analyzers/field_discovery.py]
+        REFINER[refiners/multi_value_splitter.py]
+    end
+    
+    subgraph "Snapshot Files"
+        RAW[data/snapshots/DATE/raw/]
+        REFINED[data/snapshots/DATE/refined/]
+        ANALYSIS[data/snapshots/DATE/analysis/]
+        REPORTS[data/snapshots/DATE/reports/]
+    end
+    
+    WEB --> COUNTRIES
+    WEB --> CATEGORIES
+    CONFIG --> FETCHER
+    CONFIG --> ANALYZER
+    CONFIG --> REFINER
+    
+    COUNTRIES --> FETCHER
+    CATEGORIES --> PARSER
+    
+    FETCHER --> PARSER
+    PARSER --> RAW
+    
+    RAW --> ANALYZER
+    ANALYZER --> ANALYSIS
+    
+    RAW --> REFINER
+    REFINER --> REFINED
+    REFINER --> ANALYSIS
+    
+    RAW --> REPORTS
+```
+
+### Data Enrichment Process
+
+```mermaid
+graph TD
+    A[Raw page-data.json] --> B[parser.py]
+    B --> C[Raw Country JSON]
+    C --> D{Has Category Mapping?}
+    D -->|Yes| E[Enrich with Categories]
+    D -->|No| F[Skip Enrichment]
+    E --> G[Enhanced Raw JSON]
+    F --> G
+    G --> H[field_discovery.py]
+    H --> I[Field Catalog & Coverage Analysis]
+    G --> J[multi_value_splitter.py]
+    J --> K[Multi-Value Detection]
+    K --> L{Contains br tags?}
+    L -->|Yes| M[Split Values Array]
+    L -->|No| N[Keep Single Value]
+    M --> O[Normalized Refined JSON]
+    N --> O
+    O --> P[Multi-Value Analysis Report]
+    
+    subgraph "Enrichment Sources"
+        Q[data/index/category_mapping.json]
+        Q --> E
+    end
+    
+    subgraph "Analysis Outputs"
+        I --> R[analysis/field_catalog.json]
+        P --> S[analysis/multi_value_report.json]
+    end
+    
+    subgraph "Data Storage"
+        O --> T[refined/country.json]
+        G --> U[raw/country.json]
     end
 ```
 
