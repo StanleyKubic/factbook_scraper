@@ -803,14 +803,13 @@ Examples:
         """
     )
     
-    # Mode selection
-    mode_group = parser.add_mutually_exclusive_group(required=True)
-    mode_group.add_argument(
+    # Mode selection (can be used together or separately)
+    parser.add_argument(
         '--scrape',
         action='store_true',
         help='Run scraping workflow'
     )
-    mode_group.add_argument(
+    parser.add_argument(
         '--refine',
         action='store_true',
         help='Run refinement workflow'
@@ -857,6 +856,12 @@ def main():
     args = parse_arguments()
     
     try:
+        # Validate that at least one workflow flag is provided
+        if not args.scrape and not args.refine:
+            print("Error: At least one of --scrape or --refine must be specified.")
+            print("Use --help for usage information.")
+            sys.exit(1)
+        
         # Validate date format if provided
         if args.date:
             try:

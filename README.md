@@ -283,8 +283,14 @@ pip install -r requirements.txt
 # Run complete scraping pipeline
 python main.py
 
+# Scrape and refine in one command (recommended)
+python main.py --scrape --refine
+
 # Scrape specific countries
 python main.py --countries france germany japan
+
+# Scrape and refine specific countries
+python main.py --scrape --refine --countries france germany
 
 # Test run without saving files
 python main.py --dry-run
