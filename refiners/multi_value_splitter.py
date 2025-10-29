@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 
+from bs4 import BeautifulSoup
 from utils.logger import get_logger
 from utils.config import load_config
 
@@ -25,6 +26,203 @@ logger = get_logger(__name__)
 
 # Compiled regex patterns for performance
 BR_TAG_PATTERN = re.compile(r'<br\s*/?>', re.IGNORECASE)
+STRONG_TAG_PATTERN = re.compile(r'<strong>.*?</strong>', re.IGNORECASE)
+
+
+def detect_structure_type(data: Optional[str]) -> str:
+    """
+    Detect structure type based on strong tag count.
+    
+    Args:
+        data: HTML data field content (can be None or empty)
+    
+    Returns:
+        Structure type: "key_value_pairs", "key_with_sub_values", or "simple"
+    
+    Examples:
+        >>> detect_structure_type("<strong>2023:</strong> 12M€<br><strong>2024:</strong> 14M€")
+        'key_value_pairs'
+        >>> detect_structure_type("<strong>Site and email</strong><br>www.cia.gov<br>contact@cia.gov")
+        'key_with_sub_values'
+        >>> detect_structure_type("Value1<br>Value2<br>Value3")
+        'simple'
+    """
+    if not data or not isinstance(data, str):
+        return "simple"
+    
+    # Count strong tags using compiled regex
+    strong_count = len(STRONG_TAG_PATTERN.findall(data))
+    
+    if strong_count >= 2:
+        return "key_value_pairs"
+    elif strong_count == 1:
+        return "key_with_sub_values"
+    else:
+        return "simple"
+
+
+def extract_key_value_pairs(data: str) -> List[dict]:
+    """
+    Extract key-value pairs for multi-key structure.
+    
+    Args:
+        data: HTML data field content
+    
+    Returns:
+        List of {key, value, order} dictionaries
+    
+    Examples:
+        >>> extract_key_value_pairs("<strong>2023:</strong> 12M€<br><br><strong>2024:</strong> 14M€")
+        [
+            {"key": "2023", "value": "12M€", "order": 0},
+            {"key": "2024", "value": "14M€", "order": 1}
+        ]
+    """
+    if not data:
+        return []
+    
+    try:
+        # Use BeautifulSoup for robust parsing
+        soup = BeautifulSoup(data, 'html.parser')
+        
+        # Find all strong tags
+        strong_tags = soup.find_all('strong')
+        result = []
+        
+        for i, strong_tag in enumerate(strong_tags):
+            # Extract key (text inside strong tag, clean it)
+            key = strong_tag.get_text().strip()
+            key = key.rstrip(':').strip()  # Remove trailing colon and whitespace
+            
+            # Get value (text after this strong tag until next strong or end)
+            if i < len(strong_tags) - 1:
+                # There's a next strong tag, get text between them
+                next_strong = strong_tags[i + 1]
+                value_text = str(strong_tag.next_sibling).strip()
+                # Navigate through siblings until we hit the next strong tag
+                siblings = []
+                sibling = strong_tag.next_sibling
+                while sibling and sibling != next_strong:
+                    siblings.append(str(sibling))
+                    sibling = sibling.next_sibling
+                value = ''.join(siblings).strip()
+            else:
+                # Last strong tag, get all remaining text
+                value = ''
+                sibling = strong_tag.next_sibling
+                while sibling:
+                    value += str(sibling)
+                    sibling = sibling.next_sibling
+                value = value.strip()
+            
+            # Clean value - remove br tags and extra whitespace
+            value = BR_TAG_PATTERN.sub(' ', value)
+            value = re.sub(r'\s+', ' ', value).strip()
+            
+            # Skip if key or value is empty
+            if key and value:
+                result.append({
+                    "key": key,
+                    "value": value,
+                    "order": i
+                })
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error extracting key-value pairs: {e}")
+        return []
+
+
+def extract_key_with_sub_values(data: str) -> dict:
+    """
+    Extract single key with multiple sub-values.
+    
+    Args:
+        data: HTML data field content
+    
+    Returns:
+        Single entry with key and sub_values
+    
+    Examples:
+        >>> extract_key_with_sub_values("<strong>Site and email</strong><br><br>www.cia.gov<br><br>contact@cia.gov")
+        {
+            "key": "Site and email",
+            "sub_values": ["www.cia.gov", "contact@cia.gov"],
+            "order": 0
+        }
+    """
+    if not data:
+        return {}
+    
+    try:
+        # Use BeautifulSoup for robust parsing
+        soup = BeautifulSoup(data, 'html.parser')
+        
+        # Find the strong tag
+        strong_tag = soup.find('strong')
+        if not strong_tag:
+            return {}
+        
+        # Extract key (text inside strong tag)
+        key = strong_tag.get_text().strip()
+        key = key.rstrip(':').strip()  # Remove trailing colon and whitespace
+        
+        # Get remaining content after strong tag
+        remaining_content = ''
+        sibling = strong_tag.next_sibling
+        while sibling:
+            remaining_content += str(sibling)
+            sibling = sibling.next_sibling
+        
+        # Split remaining content on br tags
+        sub_values = split_values(remaining_content)
+        
+        # Filter out empty sub-values
+        sub_values = [v for v in sub_values if v.strip()]
+        
+        return {
+            "key": key,
+            "sub_values": sub_values,
+            "order": 0
+        }
+        
+    except Exception as e:
+        logger.error(f"Error extracting key with sub-values: {e}")
+        return {}
+
+
+def split_with_structure(data: str, structure_type: str) -> List[dict]:
+    """
+    Split data according to detected structure type.
+    
+    Args:
+        data: HTML data field content
+        structure_type: Detected structure type
+    
+    Returns:
+        Structured values array
+    
+    Examples:
+        >>> split_with_structure("<strong>2023:</strong> 12M€<br><strong>2024:</strong> 14M€", "key_value_pairs")
+        [{"key": "2023", "value": "12M€", "order": 0}, {"key": "2024", "value": "14M€", "order": 1}]
+        >>> split_with_structure("<strong>Site and email</strong><br>www.cia.gov<br>contact@cia.gov", "key_with_sub_values")
+        [{"key": "Site and email", "sub_values": ["www.cia.gov", "contact@cia.gov"], "order": 0}]
+        >>> split_with_structure("Value1<br>Value2<br>Value3", "simple")
+        [{"value": "Value1", "order": 0}, {"value": "Value2", "order": 1}, {"value": "Value3", "order": 2}]
+    """
+    if structure_type == "key_value_pairs":
+        return extract_key_value_pairs(data)
+    elif structure_type == "key_with_sub_values":
+        key_result = extract_key_with_sub_values(data)
+        return [key_result] if key_result else []
+    elif structure_type == "simple":
+        # Use existing split_values logic
+        values_list = split_values(data)
+        return [{"value": value, "order": i} for i, value in enumerate(values_list)]
+    else:
+        logger.warning(f"Unknown structure type: {structure_type}")
+        return []
 
 
 def is_multi_valued(data: Optional[str]) -> bool:
@@ -96,51 +294,55 @@ def split_values(data: Optional[str]) -> List[str]:
 
 def refine_field(field: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Transform single field from raw to refined format.
+    Transform single field from raw to refined format with structured key-value detection.
     
     Args:
         field: Field object from raw country data
     
     Returns:
-        Refined field structure with uniform values array
+        Refined field structure with uniform values array and structure_type
     
     Examples:
         >>> raw_field = {
-        ...     "name": "GDP",
-        ...     "database_id": "208", 
-        ...     "category": "Economy",
-        ...     "data": "$82B (2023)<br>$80B (2022)",
-        ...     "subfields": ["2023", "2022"],
-        ...     "has_ranking": True
+        ...     "name": "Age structure",
+        ...     "database_id": "341", 
+        ...     "category": "People and Society",
+        ...     "data": "<strong>0-14 years:</strong> 39.6% (male 8,062,407/female 7,818,897)<br><br><strong>15-64 years:</strong> 57.5% (male 11,702,734/female 11,372,249)",
+        ...     "subfields": ["65 years and over", "15-64 years", "0-14 years"],
+        ...     "has_ranking": False
         ... }
         >>> refined = refine_field(raw_field)
+        >>> refined['structure_type']
+        'key_value_pairs'
         >>> refined['is_multi_valued']
         True
         >>> len(refined['values'])
         2
+        >>> refined['values'][0]['key']
+        '0-14 years'
         >>> refined['values'][0]['value']
-        '$82B (2023)'
+        '39.6% (male 8,062,407/female 7,818,897)'
         >>> refined['values'][0]['order']
         0
     """
     # Extract data field content
     data_content = field.get('data', '')
     
-    # Detect if multi-valued
-    multi_valued = is_multi_valued(data_content)
+    # Detect structure type
+    structure_type = detect_structure_type(data_content)
     
-    # Split values
-    if multi_valued:
-        values_list = split_values(data_content)
+    # Split values according to structure type
+    values_array = split_with_structure(data_content, structure_type)
+    
+    # Determine is_multi_valued based on structure type and content
+    if structure_type == "key_value_pairs":
+        multi_valued = True
+    elif structure_type == "key_with_sub_values":
+        multi_valued = False  # Single entry with sub-values is not considered multi-valued
+    elif structure_type == "simple":
+        multi_valued = len(values_array) > 1
     else:
-        # Single value case - put in array for uniformity
-        values_list = [data_content] if data_content else []
-    
-    # Create values array with order
-    values_array = [
-        {"value": value, "order": i} 
-        for i, value in enumerate(values_list)
-    ]
+        multi_valued = False  # Fallback for unknown structure types
     
     # Build refined field structure
     refined_field = {
@@ -150,6 +352,7 @@ def refine_field(field: Dict[str, Any]) -> Dict[str, Any]:
         "subfields": field.get('subfields', []),
         "has_ranking": field.get('has_ranking', False),
         "is_multi_valued": multi_valued,
+        "structure_type": structure_type,
         "values": values_array
     }
     
