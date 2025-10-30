@@ -508,8 +508,9 @@ Examples:
   # Export specific countries
   python -m exporters.xlsx_exporter --countries france germany japan
 
-  # Export specific categories
+  # Export specific categories (quote names with spaces)
   python -m exporters.xlsx_exporter --categories Economy Geography
+  python -m exporters.xlsx_exporter --categories "Military and Security" "People and Society"
 
   # Combine filters and custom output
   python -m exporters.xlsx_exporter \\
@@ -517,6 +518,11 @@ Examples:
     --countries france germany \\
     --categories Economy Geography \\
     --output exports/europe_economy.xlsx
+
+Available categories (quote names with spaces):
+  Communications, Economy, Energy, Environment, Geography, Government,
+  Introduction, "Military and Security", "People and Society", Space,
+  Terrorism, "Transnational Issues", Transportation
         """
     )
 
@@ -535,7 +541,7 @@ Examples:
     parser.add_argument(
         '--categories',
         nargs='+',
-        help='List of categories to include (default: all)'
+        help='List of categories to include - quote names with spaces (default: all)'
     )
 
     parser.add_argument(

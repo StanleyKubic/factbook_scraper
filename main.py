@@ -874,7 +874,23 @@ Examples:
   python main.py export --snapshot 2025-10-27
   python main.py export --countries france germany japan
   python main.py export --categories Economy Geography
+  python main.py export --categories "Military and Security" "People and Society"
   python main.py export --countries france --categories Economy --output exports/france_economy.xlsx
+
+Available categories (quote names with spaces):
+  - Communications
+  - Economy
+  - Energy
+  - Environment
+  - Geography
+  - Government
+  - Introduction
+  - "Military and Security"
+  - "People and Society"
+  - Space
+  - Terrorism
+  - "Transnational Issues"
+  - Transportation
         """
     )
     export_parser.add_argument(
@@ -890,7 +906,7 @@ Examples:
     export_parser.add_argument(
         '--categories',
         nargs='+',
-        help='Export only specific categories'
+        help='Export only specific categories (quote names with spaces)'
     )
     export_parser.add_argument(
         '--output',
