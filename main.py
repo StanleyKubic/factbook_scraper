@@ -26,6 +26,7 @@ from utils.logger import get_logger
 from discovery.category_mapper import fetch_category_mapping, save_category_mapping
 from refiners.category_enricher import run as run_category_enrichment
 from refiners.multi_value_splitter import run as run_multi_value_splitter
+from exporters.xlsx_exporter import run as run_xlsx_export
 
 # Module-level logger
 logger = get_logger(__name__)
@@ -783,148 +784,230 @@ def parse_arguments() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description='CIA Factbook Scraper Orchestrator',
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    subparsers = parser.add_subparsers(dest='command', help='Command to run')
+
+    # Scrape command
+    scrape_parser = subparsers.add_parser(
+        'scrape',
+        help='Scrape CIA Factbook data',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Scraping workflows
-  python main.py --scrape                                          # Scrape all countries
-  python main.py --scrape --countries france germany               # Scrape specific countries
-  python main.py --scrape --date 2025-10-26                     # Override snapshot date
-  python main.py --scrape --dry-run                              # Test without saving
-  
-  # Refinement workflows
-  python main.py --refine                                          # Refine latest snapshot (all steps)
-  python main.py --refine --steps categories --snapshot 2025-10-28  # Specific step and snapshot
-  python main.py --refine --steps multi-value                       # Only multi-value splitting
-  python main.py --refine --steps all --snapshot latest              # All steps on latest
-  
-  # Complete pipeline
-  python main.py --scrape --refine                                 # Scrape then refine
+  python main.py scrape                          # Scrape all countries
+  python main.py scrape --countries france germany
+  python main.py scrape --date 2025-10-26
+  python main.py scrape --dry-run
         """
     )
-    
-    # Mode selection (can be used together or separately)
-    parser.add_argument(
-        '--scrape',
-        action='store_true',
-        help='Run scraping workflow'
-    )
-    parser.add_argument(
-        '--refine',
-        action='store_true',
-        help='Run refinement workflow'
-    )
-    
-    # Scraping arguments
-    parser.add_argument(
+    scrape_parser.add_argument(
         '--countries',
         nargs='+',
         help='Scrape only specific countries (slugs)'
     )
-    
-    parser.add_argument(
+    scrape_parser.add_argument(
         '--date',
         type=str,
         help='Override snapshot date (YYYY-MM-DD format)'
     )
-    
-    parser.add_argument(
+    scrape_parser.add_argument(
         '--dry-run',
         action='store_true',
-        help='Test run without saving files (scraping only)'
+        help='Test run without saving files'
     )
-    
-    # Refinement arguments
-    parser.add_argument(
+    scrape_parser.add_argument(
+        '--refine',
+        action='store_true',
+        help='Run refinement after scraping'
+    )
+    scrape_parser.add_argument(
+        '--export',
+        action='store_true',
+        help='Export to Excel after scraping and refining'
+    )
+
+    # Refine command
+    refine_parser = subparsers.add_parser(
+        'refine',
+        help='Refine scraped data',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python main.py refine                          # Refine latest snapshot
+  python main.py refine --snapshot 2025-10-28
+  python main.py refine --steps categories
+  python main.py refine --steps multi-value --snapshot latest
+        """
+    )
+    refine_parser.add_argument(
+        '--snapshot',
+        type=str,
+        help='Snapshot date (YYYY-MM-DD) or "latest" (default: latest)'
+    )
+    refine_parser.add_argument(
         '--steps',
         nargs='+',
         choices=['categories', 'multi-value', 'all'],
-        help='Refinement steps to run: categories, multi-value, all (default: all)'
+        help='Refinement steps: categories, multi-value, all (default: all)'
     )
-    
-    parser.add_argument(
+    refine_parser.add_argument(
+        '--countries',
+        nargs='+',
+        help='Process only specific countries (slugs)'
+    )
+    refine_parser.add_argument(
+        '--export',
+        action='store_true',
+        help='Export to Excel after refining'
+    )
+
+    # Export command
+    export_parser = subparsers.add_parser(
+        'export',
+        help='Export refined data to Excel',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python main.py export                          # Export latest snapshot (all data)
+  python main.py export --snapshot 2025-10-27
+  python main.py export --countries france germany japan
+  python main.py export --categories Economy Geography
+  python main.py export --countries france --categories Economy --output exports/france_economy.xlsx
+        """
+    )
+    export_parser.add_argument(
         '--snapshot',
         type=str,
-        help='Snapshot date to refine (YYYY-MM-DD format or "latest")'
+        help='Snapshot date (YYYY-MM-DD) or "latest" (default: latest)'
     )
-    
+    export_parser.add_argument(
+        '--countries',
+        nargs='+',
+        help='Export only specific countries (slugs)'
+    )
+    export_parser.add_argument(
+        '--categories',
+        nargs='+',
+        help='Export only specific categories'
+    )
+    export_parser.add_argument(
+        '--output',
+        type=str,
+        help='Output file path (default: exports/factbook_export_{date}.xlsx)'
+    )
+
     return parser.parse_args()
 
 
 def main():
     """Main entry point."""
     args = parse_arguments()
-    
+
     try:
-        # Validate that at least one workflow flag is provided
-        if not args.scrape and not args.refine:
-            print("Error: At least one of --scrape or --refine must be specified.")
+        # Validate command is provided
+        if not args.command:
+            print("Error: No command specified. Use 'scrape', 'refine', or 'export'.")
             print("Use --help for usage information.")
             sys.exit(1)
-        
-        # Validate date format if provided
-        if args.date:
+
+        # Validate date formats
+        if hasattr(args, 'date') and args.date:
             try:
                 datetime.strptime(args.date, '%Y-%m-%d')
             except ValueError:
                 print(f"Error: Invalid date format '{args.date}'. Use YYYY-MM-DD format.")
                 sys.exit(1)
-        
-        # Validate snapshot format if provided for refinement
-        if args.refine and args.snapshot and args.snapshot != 'latest':
+
+        if hasattr(args, 'snapshot') and args.snapshot and args.snapshot != 'latest':
             try:
                 datetime.strptime(args.snapshot, '%Y-%m-%d')
             except ValueError:
                 print(f"Error: Invalid snapshot format '{args.snapshot}'. Use YYYY-MM-DD format or 'latest'.")
                 sys.exit(1)
-        
-        # Run appropriate workflow
-        if args.scrape:
-            # Run scraping workflow
+
+        # Handle scrape command
+        if args.command == 'scrape':
             scrape_summary = run_scraper(
                 snapshot_date=args.date,
                 country_filter=args.countries,
                 dry_run=args.dry_run
             )
-            
-            # If refinement is also requested, run it after scraping
-            if args.refine:
+
+            snapshot_date = os.path.basename(scrape_summary.get('snapshot_directory', ''))
+
+            # Run refinement if requested
+            if args.refine and scrape_summary.get('snapshot_directory'):
                 print(f"\n{'='*60}")
                 print(f"    Starting Refinement After Scraping")
                 print(f"{'='*60}")
-                
-                # Use the snapshot that was just created
-                if scrape_summary.get('snapshot_directory'):
-                    snapshot_date = os.path.basename(scrape_summary['snapshot_directory'])
-                    refine_summary = run_refinement_pipeline(
-                        snapshot_date=snapshot_date,
-                        steps=args.steps,
-                        country_filter=args.countries
-                    )
-                    
-                    # Exit based on both workflows
-                    total_failed = scrape_summary.get('failed_scrapes', 0) + \
-                                 len(refine_summary.get('step_results', {}).get('multi-value', {}).get('processing_stats', {}).get('failed_countries', []))
-                    sys.exit(0 if total_failed == 0 else 1)
-                else:
-                    print("Warning: No snapshot directory created, skipping refinement.")
-                    sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
-            else:
-                # Exit based on scraping only
-                sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
-        
-        elif args.refine:
-            # Run refinement workflow only
+
+                refine_summary = run_refinement_pipeline(
+                    snapshot_date=snapshot_date,
+                    steps=None,
+                    country_filter=args.countries
+                )
+
+            # Run export if requested
+            if args.export and scrape_summary.get('snapshot_directory'):
+                print(f"\n{'='*60}")
+                print(f"    Starting Export After Pipeline")
+                print(f"{'='*60}")
+
+                export_summary = run_xlsx_export(
+                    snapshot=snapshot_date,
+                    countries=args.countries,
+                    categories=None,
+                    output=None
+                )
+
+            sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
+
+        # Handle refine command
+        elif args.command == 'refine':
             refine_summary = run_refinement_pipeline(
                 snapshot_date=args.snapshot,
                 steps=args.steps,
                 country_filter=args.countries
             )
-            
-            # Exit based on refinement results
+
+            # Run export if requested
+            if args.export:
+                print(f"\n{'='*60}")
+                print(f"    Starting Export After Refinement")
+                print(f"{'='*60}")
+
+                # Determine snapshot directory
+                if args.snapshot:
+                    if args.snapshot == 'latest':
+                        snapshot_date = os.path.basename(get_latest_snapshot())
+                    else:
+                        snapshot_date = args.snapshot
+                else:
+                    snapshot_date = os.path.basename(get_latest_snapshot())
+
+                export_summary = run_xlsx_export(
+                    snapshot=snapshot_date,
+                    countries=args.countries,
+                    categories=None,
+                    output=None
+                )
+
             total_failed = len(refine_summary.get('step_results', {}).get('multi-value', {}).get('processing_stats', {}).get('failed_countries', []))
             sys.exit(0 if total_failed == 0 else 1)
-        
+
+        # Handle export command
+        elif args.command == 'export':
+            export_summary = run_xlsx_export(
+                snapshot=args.snapshot,
+                countries=args.countries,
+                categories=args.categories,
+                output=args.output
+            )
+
+            sys.exit(0 if export_summary.get('success', False) else 1)
+
     except KeyboardInterrupt:
         print("\nOperation interrupted by user.")
         sys.exit(130)
