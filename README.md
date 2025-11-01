@@ -218,6 +218,44 @@ countries.json   →   country URLs    →   page-data.json → clean data → s
 }
 ```
 
+#### `year_extractor.py`
+- **Role**: Intelligent year extraction from field values
+- **Process**:
+  1. Identifies year patterns in formats `(YYYY)` and `(YYYY est.)`
+  2. Applies smart heuristics to avoid false positives
+  3. Handles edge cases and descriptive text filtering
+  4. Integrates with refinement pipeline for enhanced data quality
+
+**Smart Extraction Features**:
+- **Heuristic Filtering**: Uses length limits (120 chars) and year count limits (1 year)
+- **Descriptive Text Detection**: Identifies and excludes historical narratives with multiple dates
+- **Pattern Recognition**: Supports both `(YYYY)` and `(YYYY est.)` formats
+- **Data Quality Focus**: Preserves years from simple data points while filtering contextual text
+
+**Example Transformations**:
+```json
+// Before: Incorrect extraction from descriptive text
+{
+  "name": "National holiday",
+  "value": "previous: Independence Day, 19 August (1919); under the Taliban Government, 15 August (2022) is declared a national holiday...",
+  "year": "1919"  // ❌ False positive
+}
+
+// After: Smart filtering prevents false extraction
+{
+  "name": "National holiday", 
+  "value": "previous: Independence Day, 19 August (1919); under the Taliban Government, 15 August (2022) is declared a national holiday...",
+  "year": null  // ✅ Correctly filtered out
+}
+
+// Valid data point extraction
+{
+  "name": "GDP growth rate",
+  "value": "3.2% (2024 est.)",
+  "year": "2024"  // ✅ Correctly extracted
+}
+```
+
 ### 🛠️ Utilities (`utils/`)
 
 **Purpose**: Shared functionality across all modules
@@ -250,6 +288,8 @@ cia-factbook-scraper/
 ├── analyzers/              # Data analysis and discovery
 │   └── field_discovery.py  # Field coverage and catalog generation
 ├── refiners/               # Data enhancement and normalization
+│   ├── year_extractor.py   # Intelligent year extraction
+│   ├── category_enricher.py   # Category mapping for data enrichment
 │   └── multi_value_splitter.py # Multi-value field processing
 ├── utils/                  # Shared utilities
 │   ├── config.py           # Configuration management
