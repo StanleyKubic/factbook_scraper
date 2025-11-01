@@ -20,6 +20,11 @@ from typing import Dict, List, Optional, Any, Tuple
 from bs4 import BeautifulSoup
 from utils.logger import get_logger
 from utils.config import load_config
+from refiners.year_extractor import (
+    extract_years_from_values,
+    extract_years_from_key_value_pairs,
+    extract_years_from_key_with_sub_values
+)
 
 # Module-level logger
 logger = get_logger(__name__)
@@ -308,27 +313,31 @@ def split_with_structure(data: str, structure_type: str) -> List[dict]:
         structure_type: Detected structure type
     
     Returns:
-        Structured values array
+        Structured values array with year extraction applied
     
     Examples:
         >>> split_with_structure("<strong>2023:</strong> 12M€<br><strong>2024:</strong> 14M€", "key_value_pairs")
-        [{"key": "2023", "value": "12M€", "order": 0}, {"key": "2024", "value": "14M€", "order": 1}]
+        [{"key": "2023", "value": "12M€", "year": "2023", "order": 0}, {"key": "2024", "value": "14M€", "year": "2024", "order": 1}]
         >>> split_with_structure("<strong>Site and email</strong><br>www.cia.gov<br>contact@cia.gov", "key_with_sub_values")
         [{"key": "Site and email", "sub_values": ["www.cia.gov", "contact@cia.gov"], "order": 0}]
         >>> split_with_structure("Value1<br>Value2<br>Value3", "simple")
-        [{"value": "Value1", "order": 0}, {"value": "Value2", "order": 1}, {"value": "Value3", "order": 2}]
+        [{"value": "Value1", "year": None, "order": 0}, {"value": "Value2", "year": None, "order": 1}, {"value": "Value3", "year": None, "order": 2}]
     """
     if structure_type == "key_value_pairs":
-        return extract_key_value_pairs(data)
+        kv_pairs = extract_key_value_pairs(data)
+        return extract_years_from_key_value_pairs(kv_pairs)
     elif structure_type == "key_value_pairs_with_notes":
-        return extract_key_value_pairs_with_notes(data)
+        kv_pairs_notes = extract_key_value_pairs_with_notes(data)
+        return extract_years_from_key_value_pairs(kv_pairs_notes)
     elif structure_type == "key_with_sub_values":
         key_result = extract_key_with_sub_values(data)
-        return [key_result] if key_result else []
+        return [extract_years_from_key_with_sub_values(key_result)] if key_result else []
     elif structure_type == "simple":
-        # Use existing split_values logic
+        # Use existing split_values logic and convert to dict format
         values_list = split_values(data)
-        return [{"value": value, "order": i} for i, value in enumerate(values_list)]
+        # Convert to expected format for year extraction
+        values_dict_list = [{"value": value, "order": i} for i, value in enumerate(values_list)]
+        return extract_years_from_values(values_dict_list)
     else:
         logger.warning(f"Unknown structure type: {structure_type}")
         return []
