@@ -31,13 +31,13 @@ STRONG_TAG_PATTERN = re.compile(r'<strong>.*?</strong>', re.IGNORECASE)
 
 def detect_structure_type(data: Optional[str]) -> str:
     """
-    Detect structure type based on strong tag count.
+    Detect structure type based on strong tag and note tag patterns.
     
     Args:
         data: HTML data field content (can be None or empty)
     
     Returns:
-        Structure type: "key_value_pairs", "key_with_sub_values", or "simple"
+        Structure type: "key_value_pairs", "key_value_pairs_with_notes", "key_with_sub_values", or "simple"
     
     Examples:
         >>> detect_structure_type("<strong>2023:</strong> 12M€<br><strong>2024:</strong> 14M€")
@@ -46,6 +46,8 @@ def detect_structure_type(data: Optional[str]) -> str:
         'key_with_sub_values'
         >>> detect_structure_type("Value1<br>Value2<br>Value3")
         'simple'
+        >>> detect_structure_type("<strong>revenues:</strong> $9.093 billion<br><strong>expenditures:</strong> $7.411 billion<br><b>note:</b> central government revenues (excluding grants)")
+        'key_value_pairs_with_notes'
     """
     if not data or not isinstance(data, str):
         return "simple"
@@ -53,7 +55,13 @@ def detect_structure_type(data: Optional[str]) -> str:
     # Count strong tags using compiled regex
     strong_count = len(STRONG_TAG_PATTERN.findall(data))
     
+    # Count note tags
+    note_pattern = re.compile(r'<b>note:</b>', re.IGNORECASE)
+    note_count = len(note_pattern.findall(data))
+    
     if strong_count >= 2:
+        if note_count > 0:
+            return "key_value_pairs_with_notes"
         return "key_value_pairs"
     elif strong_count == 1:
         return "key_with_sub_values"
@@ -192,6 +200,105 @@ def extract_key_with_sub_values(data: str) -> dict:
         return {}
 
 
+def extract_key_value_pairs_with_notes(data: str) -> List[dict]:
+    """
+    Extract key-value pairs with separate notes for hybrid structure.
+    
+    Args:
+        data: HTML data field content
+    
+    Returns:
+        List of {key, value, order} dictionaries and separate note entries
+    
+    Examples:
+        >>> extract_key_value_pairs_with_notes("<strong>revenues:</strong> $9.093 billion<br><strong>expenditures:</strong> $7.411 billion<br><b>note:</b> central government revenues (excluding grants) and expenses converted to US dollars at average official exchange rate for year indicated")
+        [
+            {"key": "revenues", "value": "$9.093 billion (2017 est.)", "order": 0},
+            {"key": "expenditures", "value": "$7.411 billion (2017 est.)", "order": 1},
+            {"key": "note", "value": "central government revenues (excluding grants) and expenses converted to US dollars at average official exchange rate for year indicated", "order": 2}
+        ]
+    """
+    if not data:
+        return []
+    
+    try:
+        # Use BeautifulSoup for robust parsing
+        soup = BeautifulSoup(data, 'html.parser')
+        
+        # Find all strong tags and note tags
+        strong_tags = soup.find_all('strong')
+        note_tags = soup.find_all('b', text=lambda x: x and 'note:' in x.get_text().lower())
+        
+        result = []
+        
+        # Process key-value pairs first
+        for i, strong_tag in enumerate(strong_tags):
+            # Extract key (text inside strong tag, clean it)
+            key = strong_tag.get_text().strip()
+            key = key.rstrip(':').strip()  # Remove trailing colon and whitespace
+            
+            # Get value (text after this strong tag until next strong or note)
+            value = ''
+            sibling = strong_tag.next_sibling
+            
+            while sibling:
+                # Stop if we hit the next strong tag
+                if i < len(strong_tags) - 1 and sibling == strong_tags[i + 1]:
+                    break
+                # Stop if we hit a note tag
+                if sibling in note_tags:
+                    break
+                value += str(sibling)
+                sibling = sibling.next_sibling
+            
+            # Clean value - remove br tags and extra whitespace
+            value = BR_TAG_PATTERN.sub(' ', value)
+            value = re.sub(r'\s+', ' ', value).strip()
+            
+            # Skip if key or value is empty
+            if key and value:
+                result.append({
+                    "key": key,
+                    "value": value,
+                    "order": i
+                })
+        
+        # Process separate notes
+        for i, note_tag in enumerate(note_tags):
+            note_text = note_tag.get_text().replace('note:', '').strip()
+            
+            # Get content after note tag until next note or strong tag
+            note_value = ''
+            sibling = note_tag.next_sibling
+            
+            while sibling:
+                # Stop if we hit the next strong tag
+                if sibling in strong_tags:
+                    break
+                # Stop if we hit another note tag
+                if sibling in note_tags and sibling != note_tag:
+                    break
+                note_value += str(sibling)
+                sibling = sibling.next_sibling
+            
+            # Clean note value
+            note_value = BR_TAG_PATTERN.sub(' ', note_value)
+            note_value = re.sub(r'\s+', ' ', note_value).strip()
+            
+            if note_value:
+                result.append({
+                    "key": "note",
+                    "value": note_value,
+                    "order": len(strong_tags) + i  # Notes come after all key-value pairs
+                })
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error extracting key-value pairs with notes: {e}")
+        return []
+
+
 def split_with_structure(data: str, structure_type: str) -> List[dict]:
     """
     Split data according to detected structure type.
@@ -213,6 +320,8 @@ def split_with_structure(data: str, structure_type: str) -> List[dict]:
     """
     if structure_type == "key_value_pairs":
         return extract_key_value_pairs(data)
+    elif structure_type == "key_value_pairs_with_notes":
+        return extract_key_value_pairs_with_notes(data)
     elif structure_type == "key_with_sub_values":
         key_result = extract_key_with_sub_values(data)
         return [key_result] if key_result else []
