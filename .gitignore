@@ -19,7 +19,7 @@ data/diffs/*/
 !data/index/.gitkeep
 
 # Exports
-exports/*/
+exports/
 
 # Logs
 logs/*.log
