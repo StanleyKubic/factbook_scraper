@@ -18,7 +18,6 @@ from utils.http_client import HTTPClient
 DEFAULT_TIMEOUT = 30
 DEFAULT_RETRIES = 3
 DEFAULT_DELAY = 2
-USER_AGENT = "CIA-Factbook-Scraper/1.0"
 
 # Module-level logger
 logger = get_logger(__name__)
@@ -40,8 +39,8 @@ def _get_session() -> HTTPClient:
             retry_delay=app_config.scraping.retry_delay,
             rate_limit_delay=app_config.scraping.rate_limit_delay
         )
-        # Override user agent to match requirements
-        _session.session.headers.update({'User-Agent': USER_AGENT})
+        # Use user agent from configuration
+        _session.session.headers.update({'User-Agent': app_config.scraping.user_agent})
     return _session
 
 

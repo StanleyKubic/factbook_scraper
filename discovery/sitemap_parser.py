@@ -282,8 +282,8 @@ class SitemapParser:
         # Remove trailing slash to avoid double slashes in final URL
         clean_path = clean_path.rstrip('/')
         
-        # Transform: /page-data{path}/page-data.json
-        page_data_path = f"/page-data{clean_path}/page-data.json"
+        # Use configured page data pattern
+        page_data_path = self.config.discovery.page_data_pattern.format(path=clean_path)
         
         # Construct full URL
         full_url = f"{self.config.base_url}{page_data_path}"
@@ -447,8 +447,8 @@ class SitemapParser:
             # Organize by country with page-data.json transformation
             countries = self.organize_by_country(country_urls)
             
-            # Save to data/index/countries.json
-            output_path = "data/index/countries.json"
+            # Save to configured output path
+            output_path = self.config.discovery.countries_output
             self.save_countries_index(countries, output_path)
             
             # Return statistics

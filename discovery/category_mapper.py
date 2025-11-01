@@ -17,12 +17,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from scrapers.fetcher import fetch_page_data
 from utils.logger import get_logger
+from utils.config import load_config
 
 # Module-level logger
 logger = get_logger(__name__)
-
-# Default URL for category mapping (hash may change with site updates)
-DEFAULT_CATEGORY_URL = "https://www.cia.gov/the-world-factbook/page-data/sq/d/2962548448.json"
 
 
 def fetch_category_mapping(url: Optional[str] = None) -> Optional[Dict[str, Any]]:
@@ -35,8 +33,13 @@ def fetch_category_mapping(url: Optional[str] = None) -> Optional[Dict[str, Any]
     Returns:
         Parsed JSON dict or None on failure
     """
+    config = load_config()
+    
     if url is None:
-        url = DEFAULT_CATEGORY_URL
+        url = config.discovery.category_mapping_urls.primary
+        logger.info(f"Using primary category mapping URL from config: {url}")
+    else:
+        logger.info(f"Using overridden category mapping URL: {url}")
     
     logger.info(f"Fetching category mapping from: {url}")
     
@@ -46,6 +49,18 @@ def fetch_category_mapping(url: Optional[str] = None) -> Optional[Dict[str, Any]
         
         if category_data is None:
             logger.error(f"Failed to fetch category mapping from {url}")
+            
+            # Try alternative URLs if primary fails and no explicit URL was provided
+            if url == config.discovery.category_mapping_urls.primary and config.discovery.category_mapping_urls.alternatives:
+                logger.info("Primary URL failed, trying alternative URLs...")
+                for alt_url in config.discovery.category_mapping_urls.alternatives:
+                    logger.info(f"Trying alternative URL: {alt_url}")
+                    category_data = fetch_page_data(alt_url)
+                    if category_data is not None:
+                        logger.info(f"Successfully fetched category mapping from alternative URL: {alt_url}")
+                        return category_data
+                logger.error("All alternative URLs also failed")
+            
             logger.error("This may indicate the URL hash has changed - check CIA Factbook site structure")
             return None
         
@@ -124,7 +139,8 @@ def extract_category_details(category_json: Dict[str, Any]) -> List[Dict[str, An
 def save_category_mapping(
     mapping: Dict[str, str], 
     categories_count: int, 
-    output_path: str
+    output_path: str,
+    source_url: str
 ) -> None:
     """
     Save processed mapping to JSON file.
@@ -133,6 +149,7 @@ def save_category_mapping(
         mapping: Database ID to category mapping
         categories_count: Number of categories for metadata
         output_path: Path to save file
+        source_url: URL used to fetch the data
     """
     logger.info(f"Saving category mapping to: {output_path}")
     
@@ -144,7 +161,7 @@ def save_category_mapping(
         category_data = {
             "metadata": {
                 "fetched_at": datetime.now(timezone.utc).isoformat(),
-                "source_url": DEFAULT_CATEGORY_URL,
+                "source_url": source_url,
                 "total_categories": categories_count,
                 "total_fields": len(mapping)
             },
@@ -201,6 +218,9 @@ def run() -> Dict[str, Any]:
     start_time = datetime.now(timezone.utc)
     
     try:
+        # Load configuration
+        config = load_config()
+        
         # Fetch category JSON
         category_json = fetch_category_mapping()
         if category_json is None:
@@ -225,9 +245,10 @@ def run() -> Dict[str, Any]:
         categories = safe_navigate(category_json, "data.allLaunchpadCategory.nodes", [])
         categories_count = len(categories) if isinstance(categories, list) else 0
         
-        # Save to file with rationalized structure
-        output_path = os.path.join("data", "index", "category_mapping.json")
-        save_category_mapping(mapping, categories_count, output_path)
+        # Use configured output path
+        output_path = config.discovery.category_output
+        source_url = config.discovery.category_mapping_urls.primary
+        save_category_mapping(mapping, categories_count, output_path, source_url)
         
         # Return summary
         duration = (datetime.now(timezone.utc) - start_time).total_seconds()
@@ -237,7 +258,8 @@ def run() -> Dict[str, Any]:
             "fields_count": len(mapping),
             "output_path": output_path,
             "duration_seconds": duration,
-            "fetched_at": start_time.isoformat()
+            "fetched_at": start_time.isoformat(),
+            "source_url": source_url
         }
         
         logger.info(f"Category mapping discovery completed: {summary}")

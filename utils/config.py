@@ -14,6 +14,7 @@ class ScrapingConfig(BaseModel):
     retry_delay: int = 2
     request_timeout: int = 30
     rate_limit_delay: int = 1
+    user_agent: str = "CIA-Factbook-Scraper/1.0"
 
 
 class LoggingConfig(BaseModel):
@@ -29,10 +30,25 @@ class SnapshotConfig(BaseModel):
     archive_snapshots: bool = False
 
 
+class CategoryMappingUrlsConfig(BaseModel):
+    """Category mapping URLs configuration."""
+    primary: str
+    alternatives: list[str] = Field(default_factory=list)
+
+
+class DiscoveryConfig(BaseModel):
+    """Discovery-related configuration."""
+    category_mapping_urls: CategoryMappingUrlsConfig
+    page_data_pattern: str = "/page-data{path}/page-data.json"
+    countries_output: str = "data/index/countries.json"
+    category_output: str = "data/index/category_mapping.json"
+
+
 class Config(BaseModel):
     """Main configuration model."""
     base_url: str
     sitemap_url: str
+    discovery: DiscoveryConfig
     scraping: ScrapingConfig = Field(default_factory=ScrapingConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
     snapshot: SnapshotConfig = Field(default_factory=SnapshotConfig)
@@ -50,6 +66,20 @@ class Config(BaseModel):
                 config_data = yaml.safe_load(f)
             
             # Handle nested configuration structure
+            if 'discovery' in config_data:
+                discovery_data = config_data.pop('discovery')
+            else:
+                # Set default discovery configuration
+                discovery_data = {
+                    'category_mapping_urls': {
+                        'primary': 'https://www.cia.gov/the-world-factbook/page-data/sq/d/2962548448.json',
+                        'alternatives': []
+                    },
+                    'page_data_pattern': '/page-data{path}/page-data.json',
+                    'countries_output': 'data/index/countries.json',
+                    'category_output': 'data/index/category_mapping.json'
+                }
+            
             if 'scraping' in config_data:
                 scraping_data = config_data.pop('scraping')
             else:
@@ -58,7 +88,8 @@ class Config(BaseModel):
                     'retry_attempts': config_data.pop('retry_attempts', 3),
                     'retry_delay': config_data.pop('retry_delay', 2),
                     'request_timeout': config_data.pop('request_timeout', 30),
-                    'rate_limit_delay': config_data.pop('rate_limit_delay', 1)
+                    'rate_limit_delay': config_data.pop('rate_limit_delay', 1),
+                    'user_agent': config_data.pop('user_agent', 'CIA-Factbook-Scraper/1.0')
                 }
             
             if 'logging' in config_data:
@@ -82,6 +113,7 @@ class Config(BaseModel):
             
             return cls(
                 **config_data,
+                discovery=discovery_data,
                 scraping=scraping_data,
                 logging=logging_data,
                 snapshot=snapshot_data

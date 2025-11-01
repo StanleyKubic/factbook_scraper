@@ -4,17 +4,36 @@
 base_url: "https://www.cia.gov/the-world-factbook"
 sitemap_url: "https://www.cia.gov/the-world-factbook/sitemap/sitemap-0.xml"
 
+# Discovery Configuration
+discovery:
+  # Category mapping URLs (can have multiple for fallback)
+  category_mapping_urls:
+    primary: "https://www.cia.gov/the-world-factbook/page-data/sq/d/2962548448.json"
+    # Add alternative URLs here when hash changes
+    alternatives: []
+  
+  # URL patterns for transformations
+  page_data_pattern: "/page-data{path}/page-data.json"
+  
+  # Output paths
+  countries_output: "data/index/countries.json"
+  category_output: "data/index/category_mapping.json"
+
 # Scraping settings
-retry_attempts: 3
-retry_delay: 2  # seconds, exponential backoff
-request_timeout: 30  # seconds
-rate_limit_delay: 1  # seconds between requests
+scraping:
+  retry_attempts: 3
+  retry_delay: 2  # seconds, exponential backoff
+  request_timeout: 30  # seconds
+  rate_limit_delay: 1  # seconds between requests
+  user_agent: "CIA-Factbook-Scraper/1.0"
 
 # Logging
-log_level: "DEBUG"  # DEBUG, INFO, WARNING, ERROR
-log_to_file: true
-log_to_console: true
+logging:
+  log_level: "DEBUG"  # DEBUG, INFO, WARNING, ERROR
+  log_to_file: true
+  log_to_console: true
 
 # Snapshot settings
-snapshot_compression: true  # gzip individual JSON files
-archive_snapshots: false  # tar.gz old snapshots (manual for now)
+snapshot:
+  snapshot_compression: true  # gzip individual JSON files
+  archive_snapshots: false  # tar.gz old snapshots (manual for now)
