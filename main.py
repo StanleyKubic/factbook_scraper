@@ -817,15 +817,40 @@ Examples:
         action='store_true',
         help='Test run without saving files'
     )
-    scrape_parser.add_argument(
-        '--refine',
-        action='store_true',
-        help='Run refinement after scraping'
+
+    # Pipeline command
+    pipeline_parser = subparsers.add_parser(
+        'pipeline',
+        help='Run complete pipeline with specified steps',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python main.py pipeline                          # Run all steps: scrape, refine, export
+  python main.py pipeline --steps scrape refine     # Run scraping + refinement
+  python main.py pipeline --steps refine export --snapshot 2025-10-28
+  python main.py pipeline --steps scrape --dry-run --countries france germany
+        """
     )
-    scrape_parser.add_argument(
-        '--export',
+    pipeline_parser.add_argument(
+        '--steps',
+        nargs='+',
+        choices=['scrape', 'refine', 'export'],
+        help='Pipeline steps to run (default: scrape refine export)'
+    )
+    pipeline_parser.add_argument(
+        '--countries',
+        nargs='+', 
+        help='Process only specific countries (slugs)'
+    )
+    pipeline_parser.add_argument(
+        '--date',
+        type=str,
+        help='Override snapshot date (YYYY-MM-DD format)'
+    )
+    pipeline_parser.add_argument(
+        '--dry-run',
         action='store_true',
-        help='Export to Excel after scraping and refining'
+        help='Test run without saving files'
     )
 
     # Refine command
@@ -943,40 +968,54 @@ def main():
                 print(f"Error: Invalid snapshot format '{args.snapshot}'. Use YYYY-MM-DD format or 'latest'.")
                 sys.exit(1)
 
-        # Handle scrape command
-        if args.command == 'scrape':
-            scrape_summary = run_scraper(
-                snapshot_date=args.date,
-                country_filter=args.countries,
-                dry_run=args.dry_run
-            )
-
-            snapshot_date = os.path.basename(scrape_summary.get('snapshot_directory', ''))
-
-            # Run refinement if requested
-            if args.refine and scrape_summary.get('snapshot_directory'):
-                print(f"\n{'='*60}")
-                print(f"    Starting Refinement After Scraping")
-                print(f"{'='*60}")
-
+        # Handle pipeline command
+        elif args.command == 'pipeline':
+            # Map pipeline steps to existing functions
+            steps = args.steps or ['scrape', 'refine', 'export']
+            
+            # Execute in sequence with error handling
+            snapshot_date = None
+            scrape_summary = {}
+            
+            if 'scrape' in steps:
+                scrape_summary = run_scraper(
+                    snapshot_date=args.date,
+                    country_filter=args.countries,
+                    dry_run=args.dry_run
+                )
+                
+                # Use outputs as inputs for next steps (only if not dry run)
+                if not args.dry_run and scrape_summary.get('snapshot_directory'):
+                    snapshot_date = os.path.basename(scrape_summary.get('snapshot_directory', ''))
+            
+            if 'refine' in steps and snapshot_date:
                 refine_summary = run_refinement_pipeline(
                     snapshot_date=snapshot_date,
-                    steps=None,
+                    steps=None,  # All refinement steps
                     country_filter=args.countries
                 )
-
-            # Run export if requested
-            if args.export and scrape_summary.get('snapshot_directory'):
-                print(f"\n{'='*60}")
-                print(f"    Starting Export After Pipeline")
-                print(f"{'='*60}")
-
+            
+            if 'export' in steps and snapshot_date:
                 export_summary = run_xlsx_export(
                     snapshot=snapshot_date,
                     countries=args.countries,
                     categories=None,
                     output=None
                 )
+
+            # Exit based on scrape results if scraping was performed
+            if 'scrape' in steps:
+                sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
+            else:
+                sys.exit(0)
+
+        # Handle scrape command
+        elif args.command == 'scrape':
+            scrape_summary = run_scraper(
+                snapshot_date=args.date,
+                country_filter=args.countries,
+                dry_run=args.dry_run
+            )
 
             sys.exit(0 if scrape_summary.get('failed_scrapes', 0) == 0 else 1)
 
