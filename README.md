@@ -318,25 +318,117 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Complete Workflow (Recommended)
+### Quick Reference
 ```bash
-# Run complete scraping pipeline
-python main.py
+# Complete workflow (scrape + refine + export)
+python main.py pipeline
 
 # Scrape and refine in one command (recommended)
-python main.py --scrape --refine
+python main.py pipeline --steps scrape refine
+
+# Scrape only
+python main.py scrape
+
+# Refine only existing data
+python main.py refine
+
+# Export to Excel
+python main.py export
+```
+
+### Complete Workflow (Recommended)
+```bash
+# Run complete pipeline (scrape + refine + export)
+python main.py pipeline
+
+# Scrape and refine in one command (recommended)
+python main.py pipeline --steps scrape refine
 
 # Scrape specific countries
-python main.py --countries france germany japan
+python main.py scrape --countries france germany japan
 
 # Scrape and refine specific countries
-python main.py --scrape --refine --countries france germany
+python main.py pipeline --steps scrape refine --countries france germany
 
 # Test run without saving files
-python main.py --dry-run
+python main.py scrape --dry-run
 
 # Override snapshot date
-python main.py --date 2025-10-26
+python main.py scrape --date 2025-10-26
+
+# Pipeline with custom date
+python main.py pipeline --steps scrape refine --date 2025-10-26
+```
+
+### Individual Commands
+
+#### Scraping
+```bash
+# Scrape all countries
+python main.py scrape
+
+# Scrape specific countries
+python main.py scrape --countries france germany japan
+
+# Test run without saving files
+python main.py scrape --dry-run
+
+# Override snapshot date
+python main.py scrape --date 2025-10-26
+```
+
+#### Refinement
+```bash
+# Refine latest snapshot (all steps)
+python main.py refine
+
+# Run complete refinement pipeline (categories + multi-value)
+python main.py refine --steps all --snapshot latest
+
+# Run only category enrichment
+python main.py refine --steps categories --snapshot latest
+
+# Run only multi-value splitting
+python main.py refine --steps multi-value --snapshot latest
+
+# Run on specific snapshot
+python main.py refine --steps all --snapshot 2025-10-28
+
+# Refine and export to Excel
+python main.py refine --export
+```
+
+#### Export
+```bash
+# Export latest snapshot to Excel
+python main.py export
+
+# Export specific snapshot
+python main.py export --snapshot 2025-10-28
+
+# Export specific countries
+python main.py export --countries france germany japan
+
+# Export specific categories
+python main.py export --categories Economy Geography
+
+# Custom output path
+python main.py export --output exports/custom_name.xlsx
+```
+
+#### Pipeline (Multi-step)
+```bash
+# Run all pipeline steps (scrape + refine + export)
+python main.py pipeline
+
+# Run specific steps
+python main.py pipeline --steps scrape refine
+python main.py pipeline --steps refine export
+python main.py pipeline --steps scrape only
+
+# Pipeline with filters
+python main.py pipeline --steps scrape refine --countries france germany
+python main.py pipeline --steps refine export --snapshot 2025-10-28
 ```
 
 ### Individual Module Usage
@@ -350,23 +442,6 @@ python -m analyzers.field_discovery --snapshot 2025-10-28
 
 # Refinement phase
 python -m refiners.multi_value_splitter --snapshot 2025-10-28
-```
-
-### Refinement Pipeline Integration
-The scraper now includes a sophisticated refinement pipeline that can be executed independently:
-
-```bash
-# Run complete refinement pipeline (categories + multi-value)
-python main.py --refine --steps all --snapshot latest
-
-# Run only category enrichment
-python main.py --refine --steps categories --snapshot latest
-
-# Run only multi-value splitting
-python main.py --refine --steps multi-value --snapshot latest
-
-# Run on specific snapshot
-python main.py --refine --steps all --snapshot 2025-10-28
 ```
 
 ## Features
@@ -435,7 +510,7 @@ The newly integrated refinement pipeline provides data processing capabilities:
 
 ## Pipeline Execution Results
 
-**Latest Execution**: `python main.py --refine --steps all --snapshot latest`
+**Latest Execution**: `python main.py refine --steps all --snapshot latest`
 
 **Results**:
 - ✅ **254/254 countries processed** (100% success)
